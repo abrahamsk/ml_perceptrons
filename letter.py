@@ -7,9 +7,9 @@
 
 class letter:
     """Letter entity class"""
-    letter = None
+    value = None # alphabet letter
     attributes = []  # 16 numerical attributes for a letter from the dataset
 
     def __init__(self, input):
-        self.letter = input[0]
-        self.attributes = input[1-15]
+        self.value = input[:1]
+        self.attributes = map(int, input[2:])

@@ -21,10 +21,6 @@ testing_data = data[10000:] # data from data[10000] to the end of the list
 training_data = sorted(training_data)
 testing_data = sorted(training_data)
 
-print testing_data[0][0]
-
-
-
 # with open('training_data_test.txt', 'w+') as f_training_out:
 #      for row in training_data:
 #          ###print row
@@ -36,7 +32,10 @@ print testing_data[0][0]
 #          f_testing_out.write("%s\n" % str(row))
 
 # instantiate letter and perceptron class
-###a_training_letter = letter()
+for (i, training_data) in enumerate(training_data):
+    print i, training_data[:1], training_data[1:], '\n', training_data
+    #training_data = training_data.replace(',','')
+    a_training_letter = letter(training_data.split(','))
 ###perceptron = perceptron('blarg')
 
 # read in from files
@@ -48,5 +47,13 @@ print testing_data[0][0]
 ###perceptron_inputs = a_training_letter.attributes
 
 # print line debugging!
-print perceptron.weights
-print perceptron.bias
+###print perceptron.weights
+###print perceptron.bias
+print a_training_letter.value
+print a_training_letter.attributes
+print a_training_letter.attributes[0]
+print a_training_letter.attributes[1]
+print a_training_letter.attributes[2]
+print a_training_letter.attributes[3]
+total = a_training_letter.attributes[3]+a_training_letter.attributes[3]
+print total
