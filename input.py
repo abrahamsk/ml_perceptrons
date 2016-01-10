@@ -21,6 +21,8 @@ testing_data = data[10000:] # data from data[10000] to the end of the list
 training_data = sorted(training_data)
 testing_data = sorted(training_data)
 
+print testing_data[0][0]
+
 
 
 # with open('training_data_test.txt', 'w+') as f_training_out:
