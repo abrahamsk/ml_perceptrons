@@ -5,4 +5,4 @@
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
 
-learning_rate = 0.2 # eta of 0.2 for training perceptrons
+learning_rate = 0.2 # learning rate is 0.2 for training perceptrons

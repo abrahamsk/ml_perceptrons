@@ -21,12 +21,18 @@ testing_data = data[10000:] # data from data[10000] to the end of the list
 training_data = sorted(training_data)
 testing_data = sorted(training_data)
 
-# list of letters from training data
+# create a list of letters from training data
 letters_list_training = []
 for (i, training_data) in enumerate(training_data):
     letters_list_training.append(letter(training_data.split(',')))
-    print letters_list_training[i].value
-    print letters_list_training[i].attributes
+###    print letters_list_training[i].value
+###    print letters_list_training[i].attributes
+
+
+# for (i, letters_list_training) in enumerate(letters_list_training)
+#     alphabet_dict_training.append('Letter': letters_list_training[0])
+#     alphabet_dict_training.append('Letter': letters_list_training[i].value, 'Attributes': letters_list_training[i].attributes)
+
 
 # ###perceptron = perceptron('blarg')
 # perceptron inputs are letter attributes from the training set attributes
