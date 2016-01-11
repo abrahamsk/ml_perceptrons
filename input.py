@@ -31,12 +31,29 @@ testing_data = sorted(training_data)
 #          ###print row
 #          f_testing_out.write("%s\n" % str(row))
 
-# instantiate letter and perceptron class
+letters_list = []
 for (i, training_data) in enumerate(training_data):
-    print i, training_data[:1], training_data[1:], '\n', training_data
-    #training_data = training_data.replace(',','')
-    a_training_letter = letter(training_data.split(','))
-###perceptron = perceptron('blarg')
+    letters_list.append(letter(training_data.split(',')))
+    print letters_list[i].value
+    print letters_list[i].attributes
+
+# letters_list = []
+#
+# for i in enumerate(training_data):
+#     letters_list.append(letter(training_data.split(',')))
+#
+# #later
+#
+# for obj in letters_list:
+#     print letters_list.value
+
+
+# # instantiate letter and perceptron class
+# for (i, training_data) in enumerate(training_data):
+#     ###print i, training_data[:1], training_data[1:], '\n', training_data
+#     ###training_data = training_data.replace(',','')
+#     a_training_letter = letter(training_data.split(','))
+# ###perceptron = perceptron('blarg')
 
 # read in from files
 ### with open('letter-recognition_training.data') as f:
@@ -49,11 +66,11 @@ for (i, training_data) in enumerate(training_data):
 # print line debugging!
 ###print perceptron.weights
 ###print perceptron.bias
-print a_training_letter.value
-print a_training_letter.attributes
-print a_training_letter.attributes[0]
-print a_training_letter.attributes[1]
-print a_training_letter.attributes[2]
-print a_training_letter.attributes[3]
-total = a_training_letter.attributes[3]+a_training_letter.attributes[3]
-print total
+# print a_training_letter.value
+# print a_training_letter.attributes
+# print a_training_letter.attributes[0]
+# print a_training_letter.attributes[1]
+# print a_training_letter.attributes[2]
+# print a_training_letter.attributes[3]
+# total = a_training_letter.attributes[3]+a_training_letter.attributes[3]
+# print total
