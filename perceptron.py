@@ -7,7 +7,7 @@
 import numpy as np
 import random as random
 
-learning_rate = 0.2 # eta is 0.2 for training perceptrons
+eta = 0.2 # eta is 0.2 for training perceptrons
 
 class perceptron:
     """Perceptron entity class"""
