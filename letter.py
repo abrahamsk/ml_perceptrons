@@ -19,9 +19,3 @@ class letter:
         self.attributes = map(float, input[2:])
         # scale each data value to be between 0 and 1 by dividing by 15 (max val = 15)
         self.attributes = [i/max_letter_attribute_val for i in self.attributes]
-
-    def getLetter(self):
-        return self.value
-
-    def __getitem__(self, key):
-        return self.value

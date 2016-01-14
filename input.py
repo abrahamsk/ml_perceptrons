@@ -26,8 +26,4 @@ for (i, training_data) in enumerate(training_data):
 #    print letters_list_training[i].attributes
 
 #print letters_list_training[0].value
-
-for letter in letters_list_training: print letter.value
-#for (j, letters_list_training) in enumerate(letters_list_training):
-    #print letters_list_training[j].value
-    #print letter.value
+#for letter in letters_list_training: print letter.value
