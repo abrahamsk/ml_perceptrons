@@ -5,7 +5,7 @@
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
 import string
-import perceptron
+from perceptron import perceptron
 import letter
 import input
 
@@ -17,10 +17,38 @@ eta = 0.2 # eta is 0.2 for training perceptrons
 
 # scheme for dictionary of dictionaries {char : {char : perceptron}}
 perceptrons = {}
-for key in dict.iterkeys():
-    perceptrons[key] = {}
-    for key in dict.iterkeys():
-        perceptrons[key][key] = {}
+# for key in dict.iterkeys():
+    # perceptrons[key] = {}
+    # for key in dict.iterkeys():
+        # perceptrons[key][key] = {}
+
+# create perceptron combos
+for c1 in string.ascii_lowercase:
+		for c2 in string.ascii_lowercase:
+			if c1 != c2:
+				if c2+c1 not in perceptrons:
+					#perceptrons[c1+c2] = "{\"w0\":0.1,\"w1\":0.2,\"w3\":0.3}"
+					perceptrons[c1+c2] = perceptron()
+
+
+#print perceptrons
+# print perceptrons['ab']
+# count = len(perceptrons)
+# print count
+# if count == 325:
+# 	print "yay!"
+
+# print line debugging!
+print perceptrons['ab'].weights
+print perceptrons['bc'].bias
+
+
+# scheme for dictionary of dictionaries {char : {char : perceptron}}
+# perceptrons = {}
+# for key in dict.iterkeys():
+#     perceptrons[key] = {}
+#     for key in dict.iterkeys():
+#         perceptrons[key][key] = {}
 # perceptrons = {}
 # for char_outer in ('A' to 'Y')
 #     perceptrons[char_outer] = {}
@@ -42,6 +70,4 @@ for key in dict.iterkeys():
 ###perceptron_inputs = a_training_letter.attributes
 
 
-# print line debugging!
-print perceptron.weights
-print perceptron.bias
+
