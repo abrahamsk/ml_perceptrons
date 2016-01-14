@@ -34,8 +34,8 @@ class perceptron:
         # errors.append(error)
         # w += eta * error * x
 
-        self.bias = self.bias + learning_rate * self.inputs * target
-        self.weights = self.weights + learning_rate * self.inputs * target
+        self.bias = self.bias + eta * self.inputs * target
+        self.weights = self.weights + eta * self.inputs * target
 
         return
 

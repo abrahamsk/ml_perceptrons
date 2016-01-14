@@ -7,7 +7,7 @@
 import string
 from perceptron import perceptron
 import letter
-import input
+from input import letters_list_training
 
 
 eta = 0.2 # eta is 0.2 for training perceptrons
@@ -40,7 +40,13 @@ for c1 in string.ascii_lowercase:
 
 # print line debugging!
 print perceptrons['ab'].weights
-print perceptrons['bc'].bias
+print perceptrons['yz'].bias
+
+for (i, letters_list_training) in enumerate(letters_list_training):
+	print letters_list_training[i].value
+	if letters_list_training[i].value == 'Y': #or ['Z']:
+		perceptron.train(perceptrons['yz'], letters_list_training[i].attributes)
+
 
 
 # scheme for dictionary of dictionaries {char : {char : perceptron}}
