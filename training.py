@@ -39,13 +39,19 @@ for c1 in string.ascii_lowercase:
 # 	print "yay!"
 
 # print line debugging!
-print perceptrons['ab'].weights
-print perceptrons['yz'].bias
+###print perceptrons['ab'].weights
+###print perceptrons['yz'].bias
 
-for (i, letters_list_training) in enumerate(letters_list_training):
-	print letters_list_training[i].value
-	if letters_list_training[i].value == 'Y': #or ['Z']:
-		perceptron.train(perceptrons['yz'], letters_list_training[i].attributes)
+#for letter in letters_list_training: print letter.value
+for letter in letters_list_training:
+    if letter.value == "Y":
+        print "match"
+
+
+# for (i, letters_list_training) in enumerate(letters_list_training):
+# 	print letters_list_training[i].value
+# 	if letters_list_training[i].value == 'Y': #or ['Z']:
+# 		perceptron.train(perceptrons['yz'], letters_list_training[i].attributes)
 
 
 
