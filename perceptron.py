@@ -61,3 +61,8 @@ class perceptron:
         # signum function, tells if the sign of the test is correct
         return self.bias + np.dot(self.weights, inputs) >= 0
         #return the output from the perceptron
+
+    # reset to previous weight set if results are getting worse
+    def reset_weights(self):
+        self.weight = self.prev_weights.copy()
+        return
