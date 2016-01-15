@@ -16,8 +16,7 @@ eta = 0.2  # learning rate is 0.2 for training perceptrons
 ###    print letters_list_training[i].attributes
 
 # create a dictionary of perceptrons
-# such that all different letter combinations
-# are represented
+# such that all different letter combinations are represented
 perceptrons = {}
 for letter1 in string.ascii_uppercase:
     for letter2 in string.ascii_uppercase:
@@ -91,8 +90,8 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
             else:
                 incorrect_output = incorrect_output + 1
 
-    print "correct ", correct_output
-    print "incorrect ", incorrect_output
+###    print "correct ", correct_output
+###    print "incorrect ", incorrect_output
 
 
 
