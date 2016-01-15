@@ -40,6 +40,7 @@ class perceptron:
         """
         :rtype: object
         """
+        ####print "bias + " + self.bias + "eta * 1 * target " + target
         self.bias = self.bias + eta * 1 * target # bias input is always +1
         #self.weights = self.weights + eta * inputs * target
         # for w in np.nditer(self.weights, order='C'):
@@ -53,7 +54,6 @@ class perceptron:
         # for w in self.weights:
         #     print self.weights[w]
             #w = w + eta * input[w] * target
-
         return
 
     # run test on perceptron
@@ -61,3 +61,4 @@ class perceptron:
         # return true if bias + the dot product of weights and inputs is geq 0
         # signum function, tells if the sign of the test is correct
         return self.bias + np.dot(self.weights, inputs) >= 0
+        #return the output from the perceptron
