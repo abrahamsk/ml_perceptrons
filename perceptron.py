@@ -4,13 +4,15 @@
 # HW 1: Perceptrons
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
+
 import numpy as np
 import random as random
 
 eta = 0.2 # eta is 0.2 for training perceptrons
 
 class perceptron:
-    """Perceptron entity class"""
+    """ Perceptron entity class
+     contains bias and weights """
     bias =  np.array([random.uniform(-.999999999999, .999999999999)])  # weight0 is the bias, 1 bias per perceptron
     prev_bias = np.array([]) # store prev bias when you update bias
     # 16 weights for perceptron, seeded randomly with values from 0-1
@@ -26,17 +28,25 @@ class perceptron:
     prev_weights = np.array([]) # store prev weights when you update weights
 
     def __init__(self):
+        """ init perceptron """
         return
 
-    # train perceptron
     def train(self, inputs, target):
+
+        """
+        :param inputs:
+        :param target:
+        :return perceptron output y = sgn(dot product(w,x)):
+        train perceptron using weight changes
+        for use with stochastic gradient descent
+        """
         # x, expected = choice(training_data)
         # result = dot(w, x)
         # error = expected - unit_step(result)
         # errors.append(error)
         # w += eta * error * x
 
-        # update weights
+        # update weights after storing previous weight values
         ####print "bias + " + self.bias + "eta * 1 * target " + target
         self.prev_bias = self.bias.copy() # store prev bias when you update bias
         self.bias = self.bias + eta * 1 * target # bias input is always +1
@@ -45,6 +55,7 @@ class perceptron:
         #     print w
         #w = w + eta * input[w] * target
         self.prev_weights = self.weights.copy()
+        # update all weight values using gradient descent
         for i in range(len(self.weights)):
             #print i
             self.weights[i] = self.weights[i] + eta * inputs[i] * target
@@ -55,14 +66,23 @@ class perceptron:
             #w = w + eta * input[w] * target
         return self.bias + np.dot(self.weights, inputs) >= 0
 
-    # run test on perceptron
     def test(self, inputs):
+        """
+        :param inputs:
+        return output y from perceptron
+        y = sgn(dot product(w,x))
+        """
+        # run test on perceptron
         # return true if bias + the dot product of weights and inputs is geq 0
         # signum function, tells if the sign of the test is correct
         return self.bias + np.dot(self.weights, inputs) >= 0
         #return the output from the perceptron
 
-    # reset to previous weight set if results are getting worse
+
     def reset_weights(self):
+        """
+        reset weights to previous values if results
+        of stochastic descent changes are getting worse
+        """
         self.weight = self.prev_weights.copy()
         return

@@ -7,10 +7,11 @@
 
 from letter import letter
 
-# process data
+# process data from file
 with open('letter-recognition.data', 'r') as f:
     data = f.read().split('\n')
 
+# split data in half for training and testing
 training_data = data[:10000] # data up to, not including data[10000]
 testing_data = data[10000:20000] # data from data[10000] to the end of the list
 

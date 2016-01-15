@@ -4,24 +4,21 @@
 # HW 1: Perceptrons
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
+
 import string
 from perceptron import perceptron
 import letter
 from input import letters_list_training
 
-eta = 0.2  # eta is 0.2 for training perceptrons
+eta = 0.2  # learning rate is 0.2 for training perceptrons
 
 ###    print letters_list_training[i].value
 ###    print letters_list_training[i].attributes
 
-# scheme for dictionary of dictionaries {char+char : perceptron instance}
+# create a dictionary of perceptrons
+# such that all different letter combinations
+# are represented
 perceptrons = {}
-# for key in dict.iterkeys():
-# perceptrons[key] = {}
-# for key in dict.iterkeys():
-# perceptrons[key][key] = {}
-
-# create perceptron combos
 for letter1 in string.ascii_uppercase:
     for letter2 in string.ascii_uppercase:
         if letter1 != letter2:
@@ -54,34 +51,48 @@ for letter1 in string.ascii_uppercase:
 #         #print letter.value
 #         #print "match"
 
-# vars for tracking correct and incorrect input
-correct_input = 0
-incorrect_input = 0
+# track correct and incorrect output from perceptron
+# correct_output is incremented when perceptron correctly
+# classifies a letter input
+# incorrect_output is incremented when perceptron incorrectly
+# classifies letter input
+correct_output = 0
+incorrect_output = 0
 
+# loop through dictionary of perceptron instances
+# and train perceptron for matching input
+# e.g. perceptron[AB] gets all A and all B training instances
+# from the training data
 #for i in range (1, len(perceptrons)):
-for k, v in perceptrons: #k, v are the two letters in the perceptron representation
+for k, v in perceptrons: #k, v are the two letters in the perceptron representation (perceptron[kv])
     #print k, v
     # for k in letters_list_training:
     #     for v in letters_list_training:
     #         if k != v:
     for letter in letters_list_training:
-        if k in letter.value: #or v in letter.value:
+        if k in letter.value:
+            # train perceptrons that contain the letter matching k in perceptron[kv]
+            # set t = 1 for input i in perceptron[ij]
             output = perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
             #perceptron.test(perceptrons[k+v], letter.attributes)
+            # if perceptron output is true, sgn((dot product(w,x))) is positive
+            # and
             if output == True:
-                correct_input = correct_input + 1 # increment correct counter if input matches target
+                correct_output = correct_output + 1 # increment correct counter if input matches target
             else:
-                incorrect_input = incorrect_input + 1
+                incorrect_output = incorrect_output + 1
+        # train perceptrons that contain the letter matching v in perceptron[kv]
+        # set t = -1 for input j in perceptron[ij]
         if v in letter.value:
             output = perceptron.train(perceptrons[k+v], letter.attributes, -1.0)
             #perceptron.test(perceptrons[k+v], letter.attributes)
             if output == True:
-                correct_input = correct_input + 1 # increment correct counter if input matches target
+                correct_output = correct_output + 1 # increment correct counter if input matches target
             else:
-                incorrect_input = incorrect_input + 1
+                incorrect_output = incorrect_output + 1
 
-    print "correct ", correct_input
-    print "incorrect ", incorrect_input
+    print "correct ", correct_output
+    print "incorrect ", incorrect_output
 
 
 
