@@ -54,6 +54,10 @@ for letter1 in string.ascii_uppercase:
 #         #print letter.value
 #         #print "match"
 
+# vars for tracking correct and incorrect input
+correct_input = 0
+incorrect_input = 0
+
 #for i in range (1, len(perceptrons)):
 for k, v in perceptrons: #k, v are the two letters in the perceptron representation
     #print k, v
@@ -62,10 +66,22 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
     #         if k != v:
     for letter in letters_list_training:
         if k in letter.value: #or v in letter.value:
-            perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
+            output = perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
             #perceptron.test(perceptrons[k+v], letter.attributes)
+            if output == True:
+                correct_input = correct_input + 1 # increment correct counter if input matches target
+            else:
+                incorrect_input = incorrect_input + 1
         if v in letter.value:
-            perceptron.train(perceptrons[k+v], letter.attributes, -1.0)
+            output = perceptron.train(perceptrons[k+v], letter.attributes, -1.0)
+            #perceptron.test(perceptrons[k+v], letter.attributes)
+            if output == True:
+                correct_input = correct_input + 1 # increment correct counter if input matches target
+            else:
+                incorrect_input = incorrect_input + 1
+
+    print "correct ", correct_input
+    print "incorrect ", incorrect_input
 
 
 

@@ -5,8 +5,6 @@
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
 
-import numpy as np
-
 max_letter_attribute_val = 15
 
 class letter:
