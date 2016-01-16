@@ -67,7 +67,8 @@ class perceptron:
         # for w in self.weights:
         #     print self.weights[w]
             #w = w + eta * input[w] * target
-        return self.bias + np.dot(self.weights, inputs) >= 0
+        ####return self.bias + np.dot(self.weights, inputs) >= 0
+        return
 
     def test(self, inputs):
         """

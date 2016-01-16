@@ -90,16 +90,17 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
     for i in range(0, epochs):
         print "\nEpoch", i, "begins! "
         total = 0.0
-    #    print k, v
+        print k, v
         # for k in letters_list_training:
         #     for v in letters_list_training:
         #         if k != v:
         for letter in letters_list_training:
-    #        print letter.value
+            #print letter.value
             if k in letter.value:
                 # train perceptrons that contain the letter matching k in perceptron[kv]
                 # set t = 1 for input i in perceptron[ij]
-                output = perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
+     ####           output = perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
+                output = perceptron.test(perceptrons[k+v], letter.attributes)
                 #perceptron.test(perceptrons[k+v], letter.attributes)
                 # if perceptron output is true, sgn((dot product(w,x))) is positive
                 if output == True:
@@ -107,6 +108,7 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
     #                print "+ Input k: ", k, " from perceptron ", k,v, " result: ", k
                 else:
                     incorrect_output = incorrect_output + 1
+                    perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
                     # mark that y neq t, so that weights can be adjusted
                     ####perceptron.set_incorrect_result(perceptrons[k+v])
                     # revert weights
@@ -115,13 +117,15 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
             # train perceptrons that contain the letter matching v in perceptron[kv]
             # set t = -1 for input j in perceptron[ij]
             if v in letter.value:
-                output = perceptron.train(perceptrons[k+v], letter.attributes, -1.0)
+    ####            output = perceptron.train(perceptrons[k+v], letter.attributes, -1.0)
+                output = perceptron.test(perceptrons[k+v], letter.attributes)
                 #perceptron.test(perceptrons[k+v], letter.attributes)
                 if output == True:
                     correct_output = correct_output + 1 # increment correct counter if input matches target
     #                print ">>> + Input v: ", v, " from perceptron ", k,v, " result: ", v
                 else:
                     incorrect_output = incorrect_output + 1
+                    perceptron.train(perceptrons[k+v], letter.attributes, 1.0)
                     ####perceptron.set_incorrect_result(perceptrons[k+v])
                     # revert weights
                     ####perceptron.revert_weights(perceptrons[k+v])
