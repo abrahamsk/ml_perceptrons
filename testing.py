@@ -44,11 +44,12 @@ print "accuracy: ", accuracy
 # create confusion matrix to describe performance
 # of perceptron learning algorithm
 # using pandas library
-###y_actual     = [2, 0, 2, 2, 0, 1, 1, 2, 2, 0, 1, 2]
-###x_predicted = [0, 0, 2, 1, 0, 2, 1, 0, 2, 0, 2, 2]
-# confusion_matrix(x_predicted, y_actual)
-# print confusion_matrix(x_predicted, y_actual)
+##y_actu = [2, 0, 2, 2, 0, 1, 1, 2, 2, 0, 1, 2]
+##y_pred = [0, 0, 2, 1, 0, 2, 1, 0, 2, 0, 2, 2]
+# confusion_matrix(y_pred, y_actu)
+# print confusion_matrix(y_pred, y_actu)
 
-###cm = ConfusionMatrix(y_actual, x_predicted)
+cm = ConfusionMatrix(y_actu, y_pred)
+print("Confusion matrix:\n%s" % cm)
 ###cm.print_stats()
 
