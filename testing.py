@@ -12,18 +12,34 @@ from training import perceptrons, letters_list_training
 from input import letters_list_testing
 from pandas_confusion import ConfusionMatrix
 
+# track correct and incorrect output from perceptron
+# correct_output is incremented when perceptron correctly
+# classifies a letter input
+# incorrect_output is incremented when perceptron incorrectly
+# classifies letter input
+correct_test_output = 0.0
+incorrect_test_output = 0.0
+accuracy = 0.0
+
+print "***Testing***"
+
 # run all data instances through trained perceptrons
 # to test accuracy
 for k, v in perceptrons: #k, v are the two letters in the perceptron representation (perceptron[kv])
     for letter in letters_list_testing:
             output = perceptron.test(perceptrons[k+v], letter.attributes)
             if output == True:
-                correct_output = correct_output + 1 # increment correct counter if input matches target
+                correct_test_output = correct_test_output + 1 # increment correct counter if input matches target
             else:
-                incorrect_output = incorrect_output + 1
+                incorrect_test_output = incorrect_test_output + 1
 
-print "correct ", correct_output
-print "incorrect ", incorrect_output
+
+print "correct ", correct_test_output
+print "incorrect ", incorrect_test_output
+total = correct_test_output + incorrect_test_output
+print "total: ", total
+accuracy = correct_test_output/total
+print "accuracy: ", accuracy
 
 # create confusion matrix to describe performance
 # of perceptron learning algorithm

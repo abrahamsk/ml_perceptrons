@@ -8,7 +8,7 @@
 import numpy as np
 import random as random
 
-eta = 0.2 # eta is 0.2 for training perceptrons
+eta = 0.2 # learning rate is 0.2 for training perceptrons
 
 class perceptron:
     """ Perceptron entity class
@@ -26,6 +26,9 @@ class perceptron:
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999)])
     prev_weights = np.array([]) # store prev weights when you update weights
+
+    # bool to mark whether output from perceptron is correct during training
+    is_result_correct = None
 
     def __init__(self):
         """ init perceptron """
@@ -72,14 +75,27 @@ class perceptron:
         return output y from perceptron
         y = sgn(dot product(w,x))
         """
-        # run test on perceptron
+        # run test on perceptron and return the output from the perceptron
         # return true if bias + the dot product of weights and inputs is geq 0
         # signum function, tells if the sign of the test is correct
         return self.bias + np.dot(self.weights, inputs) >= 0
-        #return the output from the perceptron
+
+    def set_incorrect_result(self):
+        """
+        record that perceptron returned an incorrect result
+        such that output  y neq target t
+        """
+        self.is_result_correct = False
+        return
+
+    def check_result(self):
+        """
+        :return whether perceptron was marked as having incorrect results:
+        """
+        return self.is_result_correct
 
 
-    def reset_weights(self):
+    def revert_weights(self):
         """
         reset weights to previous values if results
         of stochastic descent changes are getting worse

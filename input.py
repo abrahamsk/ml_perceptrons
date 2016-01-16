@@ -4,7 +4,7 @@
 # HW 1: Perceptrons
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
-
+import string
 from letter import letter
 
 # process data from file
