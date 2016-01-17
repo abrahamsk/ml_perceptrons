@@ -23,35 +23,46 @@ accuracy = 0.0
 # set up confusion matrix
 y_actu = []
 y_pred = []
+# dictionary for votes for letters (all alphabet letters valued at 0 to count votes)
+votes = {c:i for i, c in enumerate(string.ascii_uppercase, 1)}
+votes = dict.fromkeys(votes.iterkeys(), 0)
 
 print "***Testing***"
 
 # run all data instances through trained perceptrons
 # to test accuracy
-for k, v in perceptrons: #k, v are the two letters in the perceptron representation (perceptron[kv])
-    for letter in letters_list_testing:
-        output = perceptron.test(perceptrons[k+v], letter.attributes)
-        if output == True:
-            #print "true loop: output: ", output
-            #print "correct: ", "k: ", k, "v: ", v
-            correct_test_output = correct_test_output + 1 # increment correct counter if input matches target
-            y_pred.append(k)
-            y_actu.append(k)
-        else:
-            #print letter.value
-            #print "else: output: ", output
-            #print "incorrect: ", "k: ", k, "v: ", v
-            incorrect_test_output = incorrect_test_output + 1
-            y_pred.append(k)
-            y_actu.append(v)
+# for k, v in perceptrons: #k, v are the two letters in the perceptron representation (perceptron[kv])
+#     for letter in letters_list_testing:
+#         output = perceptron.test(perceptrons[k+v], letter.attributes)
+#         if output == True:
+#             #print "true loop: output: ", output
+#             #print "correct: ", "k: ", k, "v: ", v
+#             correct_test_output = correct_test_output + 1 # increment correct counter if input matches target
+#             y_pred.append(k)
+#             y_actu.append(k)
+#         else:
+#             #print letter.value
+#             #print "else: output: ", output
+#             #print "incorrect: ", "k: ", k, "v: ", v
+#             incorrect_test_output = incorrect_test_output + 1
+#             y_pred.append(k)
+#             y_actu.append(v)
+
+# for letter in letters_list_testing:
+#     for k, v in perceptrons:
+#         actual_letter = letter.value
+#         output = perceptron.test(perceptrons[k+v], letter.attributes)
+#         if output == True: # perceptron guessed first letter (i in perceptron[ij])
+#             print
 
 
-print "correct ", correct_test_output
-print "incorrect ", incorrect_test_output
-total = correct_test_output + incorrect_test_output
-print "total: ", total
-accuracy = correct_test_output/total
-print "accuracy: ", accuracy
+# *********************
+# print "correct ", correct_test_output
+# print "incorrect ", incorrect_test_output
+# total = correct_test_output + incorrect_test_output
+# print "total: ", total
+# accuracy = correct_test_output/total
+# print "accuracy: ", accuracy
 
 # create confusion matrix to describe performance
 # of perceptron learning algorithm

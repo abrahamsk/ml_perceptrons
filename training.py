@@ -88,7 +88,7 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
     correct_output = 0.0
     incorrect_output = 0.0
     for i in range(0, epochs):
-        print "\nEpoch", i, "begins! "
+        #print "\nEpoch", i, "begins! "
         total = 0.0
     #    print k, v
         # for k in letters_list_training:
