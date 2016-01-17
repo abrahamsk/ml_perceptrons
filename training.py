@@ -37,10 +37,11 @@ for letter1 in string.ascii_uppercase:
         if letter1 != letter2:
             if letter2 + letter1 not in perceptrons:
                 # perceptrons[i+j] = {w0":0.1,"w1":0.2,"w3":0.3}
-                perceptrons[letter1 + letter2] = perceptron()
+                letters_combined = letter1 + letter2
+                perceptrons[letters_combined] = perceptron()
 
-#print perceptrons
-#print perceptrons['AB']
+# print perceptrons
+# print perceptrons['AB']
 # count = len(perceptrons)
 # print count
 # if count == 325:
@@ -147,13 +148,13 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
         #         perceptron.revert_weights(perceptrons[k])
 
     accuracy_prev = accuracy # store previous accuracy for comparison (initialized to 0 at training start)
-    print "previous accuracy: ", accuracy_prev
+##    print "previous accuracy: ", accuracy_prev
     accuracy = correct_output/total
-    print "accuracy: ", accuracy
+#    print "accuracy: ", accuracy
 
     # stop training if accuracy stops improving
     if (accuracy == accuracy_prev):
-        print "no accuracy improvement"
+##        print "no accuracy improvement"
         break
 
 
