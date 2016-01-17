@@ -9,6 +9,7 @@ import string
 from perceptron import perceptron
 import letter
 from input import letters_list_training
+import random
 
 # get stats for perceptron run
 def get_stats(correct_output, incorrect_output, accuracy, accuracy_prev):
@@ -84,6 +85,9 @@ accuracy_prev = 0.0
 # from the training data
 #for i in range (1, len(perceptrons)):
 print "***Training***"
+# shuffle letters
+random.shuffle(letters_list_training)
+#print letters_list_training
 for k, v in perceptrons: #k, v are the two letters in the perceptron representation (perceptron[kv])
     # reset values for counts
     correct_output = 0.0
@@ -142,6 +146,7 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
 
      # revert weights if accuracy has gotten worse
     if(accuracy < accuracy_prev):
+        print "reverting weights"
         perceptron.revert_weights(perceptrons[k+v])
         # for k in perceptrons:
         #     if (perceptron.check_result(perceptrons[k])) == False:
@@ -154,7 +159,7 @@ for k, v in perceptrons: #k, v are the two letters in the perceptron representat
 
     # stop training if accuracy stops improving
     if (accuracy == accuracy_prev):
-##        print "no accuracy improvement"
+        print "no accuracy improvement"
         break
 
 

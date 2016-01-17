@@ -12,6 +12,7 @@ from training import perceptrons, letters_list_training
 from input import letters_list_testing
 from pandas_confusion import ConfusionMatrix
 import pprint
+import random
 
 # track correct and incorrect output from perceptron
 # correct_output is incremented when perceptron correctly
@@ -31,7 +32,7 @@ votes = dict.fromkeys(intermed_votes.iterkeys(), 0)
 #print votes
 
 # convert list of letters to tuple to use as dictionary key
-letters_tup_testing = tuple(letters_list_testing)
+###letters_tup_testing = tuple(letters_list_testing)
 
 print "***Testing***"
 
@@ -56,7 +57,10 @@ print "***Testing***"
 
 # for every letter, run through every perceptron
 # and record votes for which letter perceptron returns
+# shuffle letters
+random.shuffle(letters_list_testing)
 for letter in letters_list_testing:
+    print letter.value[0]
     for k, v in perceptrons:
         actual_letter = str(letter.value[0])
         # print "actual letter ", actual_letter
@@ -64,10 +68,12 @@ for letter in letters_list_testing:
         if output == True: # perceptron guessed first letter (i in perceptron[ij])
             ###pprint.pprint(votes)
             ###pprint.pprint(actual_letter)
-            votes[actual_letter] += 1 # record a vote for that letter
+            #votes[actual_letter] += 1 # record a vote for that letter
         else:
             votes[perceptron[v]] += 1
 print votes
+
+# accuracy is the number of correct votes/total votes
 
 # *********************
 # print "correct ", correct_test_output
