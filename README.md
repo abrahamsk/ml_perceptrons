@@ -1,3 +1,2 @@
 # ml_perceptrons
-Perceptron learning algorithm
-Using stochastic gradient descent and all-pairs classification
+Perceptron learning algorithm using stochastic gradient descent and all-pairs classification.
