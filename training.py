@@ -122,10 +122,11 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     # preserve weights to revert if necessary
     # saved_bias = np.array([])
     # saved_weights = np.array([])
-    perceptron.save_bias_and_weights(perceptrons[m+n])
+    saved_bias = (perceptrons[m+n].bias).copy()
+    saved_weights = (perceptrons[m+n].weights).copy()
     print "Saved bias and weights: "
-    print perceptrons[m+n].saved_bias
-    print perceptrons[m+n].saved_weights
+    print saved_bias
+    print saved_weights
 
     for i in range(0, epochs):
         # Start epoch
@@ -167,8 +168,9 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
 
         # stop training if accuracy stops improving
         if (num_accurate_revised == num_accurate):
-            print "No accuracy improvement, stopping training"
-            break
+            if epochs != 0:
+                print "No accuracy improvement, stopping training"
+                break
 
         # # revise accuracy for next epoch run
         # print "Reassigning accuracy for next epoch start"

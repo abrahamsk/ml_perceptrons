@@ -15,7 +15,6 @@ class perceptron:
      contains bias and weights """
     bias =  np.array([random.uniform(-.999999999999, .999999999999)])  # weight0 is the bias, 1 bias per perceptron
     prev_bias = np.array([]) # store prev bias when you update bias
-    saved_bias = np.array([])
     # 16 weights for perceptron, seeded randomly with values from 0-1
     # Total of 17 weights, including the bias
     weights = np.array([random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
@@ -27,7 +26,6 @@ class perceptron:
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999)])
     prev_weights = np.array([]) # store prev weights when you update weights
-    saved_weights = np.array([])
 
     # bool to mark whether output from perceptron is correct during training
     is_result_correct = None
@@ -48,10 +46,8 @@ class perceptron:
         # that match the letters in perceptron name
         for i in range(len(instances)):
             #print instances[i].attributes
-            # if perceptron.test(self, instances[i].attributes) == instances[i].target:
-            #     num_accurate += 1
-            if perceptron.test(self, instances[i].attributes) == True:
-                num_accurate += 1
+            if perceptron.test(self, instances[i].attributes) == instances[i].target:
+               num_accurate += 1
 
         return num_accurate
 
@@ -91,21 +87,19 @@ class perceptron:
         ####return self.bias + np.dot(self.weights, inputs) >= 0
         return
 
-    # def save_bias(self):
-    #     """
-    #     Preserve the bias to revert if need be after epoch
-    #     :return: bias
-    #     """
-    #     return self.bias
+    def save_bias(self):
+        """
+        Preserve the bias to revert if need be after epoch
+        :return: bias
+        """
+        return self.bias
 
-    def save_bias_and_weights(self):
+    def save_weights(self):
         """
         Preserve the weights to revert if need be after epoch
         :return: weights
         """
-        self.saved_bias = self.bias.copy()
-        self.saved_weights = self.weights.copy()
-        return
+        return self.weights
 
     def test(self, inputs):
         """
@@ -138,11 +132,6 @@ class perceptron:
         reset weights to previous values if results
         of stochastic descent changes are getting worse
         """
-        # self.bias = saved_bias.copy()
-        # print "reverted bias:", self.bias
-        # self.weight = saved_weights.copy()
-        # print "reverted weights", self.weights
-
-        self.bias = self.saved_bias.copy()
-        self.weights = self.saved_bias.copy()
+        self.bias = saved_bias.copy()
+        self.weight = saved_weights.copy()
         return
