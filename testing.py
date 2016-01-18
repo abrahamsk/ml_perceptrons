@@ -60,17 +60,22 @@ print "***Testing***"
 # shuffle letters
 random.shuffle(letters_list_testing)
 for letter in letters_list_testing:
-    print letter.value[0]
-    for k, v in perceptrons:
+    #print letter.value[0]
+    for m, n in perceptrons:
         actual_letter = str(letter.value[0])
         # print "actual letter ", actual_letter
-        output = perceptron.test(perceptrons[k+v], letter.attributes)
+        output = perceptron.test(perceptrons[m + n], letter.attributes)
         if output == True: # perceptron guessed first letter (i in perceptron[ij])
             ###pprint.pprint(votes)
             ###pprint.pprint(actual_letter)
             #votes[actual_letter] += 1 # record a vote for that letter
+            votes[perceptrons[m]] += 1
         else:
-            votes[perceptron[v]] += 1
+            votes[perceptrons[n]] += 1
+        # tally votes for letter guesses (get max of votes)
+
+        # break ties if more than one letter has equal votes
+
 print votes
 
 # accuracy is the number of correct votes/total votes

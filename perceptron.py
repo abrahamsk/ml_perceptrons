@@ -103,3 +103,34 @@ class perceptron:
         """
         self.weight = self.prev_weights.copy()
         return
+
+
+# compute accuracy of perceptron
+def compute_accuracy(perceptron, letters_list_training):
+    for letter in letters_list_training:
+            #print letter.value
+            if m in letter.value:
+                # test perceptrons that contain the letter matching m in perceptron[mn]
+                output = perceptron.test(perceptrons[m + n], letter.attributes)
+                # if perceptron output is true, sgn((dot product(w,x))) is positive
+##                print "output: ", output
+                if output == True:
+                    correct_output = correct_output + 1 # increment correct counter if input matches target
+#                    print "+ Input m: ", m, " from perceptron ", m,n, " result: ", m
+                else:
+                    incorrect_output = incorrect_output + 1
+                    # set t = 1 for input m in perceptron[mn]
+                    perceptron.train(perceptrons[m + n], letter.attributes, 1.0)
+#                    print "- Input m: ", m, " from perceptron ", m,n, " result: ", n
+            if n in letter.value:
+                # test perceptrons that contain the letter matching m in perceptron[mn]
+                output = perceptron.test(perceptrons[m + n], letter.attributes)
+##                print "output: ", output
+                if output == True:
+                    correct_output = correct_output + 1 # increment correct counter if input matches target
+#                    print ">>> + Input n: ", n, " from perceptron ", m,n, " result: ", n
+                else:
+                    incorrect_output = incorrect_output + 1
+                    # set t = -1 for input n in perceptron[mn]
+                    perceptron.train(perceptrons[m + n], letter.attributes, -1.0)
+#                    print ">>> - Input n: ", n, " from perceptron ", m,n, " result: ", m
