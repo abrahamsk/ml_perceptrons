@@ -93,8 +93,12 @@ random.shuffle(letters_list_training)
 # for letter in letters_list_training:
 #     print letter.value[0]
 
+perceptron_count = 1
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
     print m, n
+
+    print "Training perceptron",perceptron_count,"/", len(perceptrons)
+    perceptron_count += 1
     # collect matching letters m,n to train perceptron[mn]
     for letter in letters_list_training:
         if m in letter.value:
@@ -116,12 +120,12 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     #     print letter.target
 
     # preserve weights to revert if necessary
-    saved_bias = np.array([])
-    saved_weights = np.array([])
-    saved_bias = perceptron.save_bias(perceptrons[m+n])
-    saved_weights =  perceptron.save_weights(perceptrons[m+n])
-    print saved_bias
-    print saved_weights
+    # saved_bias = np.array([])
+    # saved_weights = np.array([])
+    perceptron.save_bias_and_weights(perceptrons[m+n])
+    print "Saved bias and weights: "
+    print perceptrons[m+n].saved_bias
+    print perceptrons[m+n].saved_weights
 
     for i in range(0, epochs):
         # Start epoch
@@ -132,16 +136,21 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
         #       - Revert weights if accuracy goes down
         #       - Break if accuracy has not improved
 
-        saved_bias = perceptron.save_bias(perceptrons[m+n])
-        saved_weights =  perceptron.save_weights(perceptrons[m+n])
+        saved_bias = (perceptrons[m+n].bias).copy()
+        saved_weights = (perceptrons[m+n].weights).copy()
         # 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
         # test_accuracy runs perceptron.test() function for all matching letter instances
         num_accurate = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
-        print "Start of epoch, num accurate: ", num_accurate
+        print "\nStart of epoch", i
+        print "num accurate:", num_accurate
 
         # 2) Train perceptron
         for letter in matching_letters:
-            perceptron.train(perceptrons[m+n], letter.attributes, letter.target)
+            output = perceptron.test(perceptrons[m+n], letter.attributes)
+            # if perceptron doesn't return the expect output,
+            # run training on perceptron to modify the weights
+            if output != letter.target:
+                perceptron.train(perceptrons[m+n], letter.attributes, letter.target)
 
         # 3) Test accuracy after weights have been updated
         # After weights have been updated, test accuracy of perceptron again
@@ -161,13 +170,13 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
             print "No accuracy improvement, stopping training"
             break
 
-        # revise accuracy for next epoch run
-        print "Reassigning accuracy for next epoch start"
-        print "num_accurate before: ", num_accurate
-        print "num_accurate_revised before: ", num_accurate_revised
-        num_accurate_revised = num_accurate
-        print "num_accurate after: ", num_accurate
-        print "num_accurate_revised after: ", num_accurate_revised
+        # # revise accuracy for next epoch run
+        # print "Reassigning accuracy for next epoch start"
+        # print "num_accurate before reassigning: ", num_accurate
+        # print "num_accurate_revised before reassigning: ", num_accurate_revised
+        # num_accurate_revised = num_accurate
+        # print "num_accurate after reassigning: ", num_accurate
+        # print "num_accurate_revised after reassigning: ", num_accurate_revised
 
 
 
