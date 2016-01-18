@@ -26,7 +26,7 @@ def get_stats(correct_output, incorrect_output, accuracy, accuracy_prev):
 
 
 eta = 0.2  # learning rate is 0.2 for training perceptrons
-epochs = 5 # start with 5, work up to 30
+epochs = 2 # number of training epochs
 
 ###    print letters_list_training[i].value
 ###    print letters_list_training[i].attributes
@@ -97,7 +97,7 @@ perceptron_count = 1
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
     print m, n
 
-    print "Training perceptron",perceptron_count,"/", len(perceptrons)
+    print "Training perceptron",perceptron_count,"/", len(perceptrons[0:5])
     perceptron_count += 1
     # collect matching letters m,n to train perceptron[mn]
     for letter in letters_list_training:
@@ -137,7 +137,7 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     print saved_bias
     print saved_weights
 
-    for i in range(0, epochs):
+    for j in range(0, epochs):
         # Start epoch
         # Steps in epoch:
         #   1. Test initial accuracy (preserve weights)
@@ -159,11 +159,11 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
         # test_accuracy runs perceptron.test() function for all matching letter instances
         # num_accurate = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
         num_accurate = perceptrons[m+n].test_accuracy(matching_letters)
-        print "\nStart of epoch", i
+        print "\nStart of epoch", j
         print "num accurate:", num_accurate
 
         # 2) Train perceptron
-        for letter in matching_letters:
+        for letter in matching_letters[0:5]:
             # output = perceptron.test(perceptrons[m+n], letter.attributes)
             output = perceptrons[m+n].test(letter.attributes)
             # if perceptron doesn't return the expect output,
