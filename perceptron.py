@@ -34,6 +34,23 @@ class perceptron:
         """ init perceptron """
         return
 
+    def test_accuracy(self, instances):
+        """
+        Test the accuracy of a perceptron for a given set of inputs
+        :param inputs:
+        :return: the number of accurate results for a given data set
+        """
+        num_accurate = 0
+
+        # run test function for all instances in training set
+        # that match the letters in perceptron name
+        for i in range(len(instances)):
+            #print instances[i].attributes
+            if perceptron.test(self, instances[i].attributes) == True:
+               num_accurate += 1
+
+        return num_accurate
+
     def train(self, inputs, target):
 
         """
@@ -51,13 +68,13 @@ class perceptron:
 
         # update weights after storing previous weight values
         ####print "bias + " + self.bias + "eta * 1 * target " + target
-        self.prev_bias = self.bias.copy() # store prev bias when you update bias
+    #    self.prev_bias = self.bias.copy() # store prev bias when you update bias
         self.bias = self.bias + eta * 1 * target # bias input is always +1
         #self.weights = self.weights + eta * inputs * target
         # for w in np.nditer(self.weights, order='C'):
         #     print w
         #w = w + eta * input[w] * target
-        self.prev_weights = self.weights.copy()
+    #    self.prev_weights = self.weights.copy()
         # update all weight values using gradient descent
         for i in range(len(self.weights)):
             #print i
@@ -69,6 +86,20 @@ class perceptron:
             #w = w + eta * input[w] * target
         ####return self.bias + np.dot(self.weights, inputs) >= 0
         return
+
+    def save_bias(self):
+        """
+        Preserve the bias to revert if need be after epoch
+        :return: bias
+        """
+        return self.bias
+
+    def save_weights(self):
+        """
+        Preserve the weights to revert if need be after epoch
+        :return: weights
+        """
+        return self.weights
 
     def test(self, inputs):
         """
@@ -96,41 +127,11 @@ class perceptron:
         return self.is_result_correct
 
 
-    def revert_weights(self):
+    def revert_weights(self, saved_bias, saved_weights):
         """
         reset weights to previous values if results
         of stochastic descent changes are getting worse
         """
-        self.weight = self.prev_weights.copy()
+        self.bias = self.saved_bias.copy()
+        self.weight = self.saved_weights.copy()
         return
-
-
-# compute accuracy of perceptron
-def compute_accuracy(perceptron, letters_list_training):
-    for letter in letters_list_training:
-            #print letter.value
-            if m in letter.value:
-                # test perceptrons that contain the letter matching m in perceptron[mn]
-                output = perceptron.test(perceptrons[m + n], letter.attributes)
-                # if perceptron output is true, sgn((dot product(w,x))) is positive
-##                print "output: ", output
-                if output == True:
-                    correct_output = correct_output + 1 # increment correct counter if input matches target
-#                    print "+ Input m: ", m, " from perceptron ", m,n, " result: ", m
-                else:
-                    incorrect_output = incorrect_output + 1
-                    # set t = 1 for input m in perceptron[mn]
-                    perceptron.train(perceptrons[m + n], letter.attributes, 1.0)
-#                    print "- Input m: ", m, " from perceptron ", m,n, " result: ", n
-            if n in letter.value:
-                # test perceptrons that contain the letter matching m in perceptron[mn]
-                output = perceptron.test(perceptrons[m + n], letter.attributes)
-##                print "output: ", output
-                if output == True:
-                    correct_output = correct_output + 1 # increment correct counter if input matches target
-#                    print ">>> + Input n: ", n, " from perceptron ", m,n, " result: ", n
-                else:
-                    incorrect_output = incorrect_output + 1
-                    # set t = -1 for input n in perceptron[mn]
-                    perceptron.train(perceptrons[m + n], letter.attributes, -1.0)
-#                    print ">>> - Input n: ", n, " from perceptron ", m,n, " result: ", m

@@ -14,6 +14,7 @@ class letter:
     contains alphabet letter value and dataset attributes"""
     value = None # alphabet letter
     attributes = []  # 16 numerical attributes for a letter from the data set
+    target = 0
 
     def __init__(self, input):
         """
@@ -24,3 +25,4 @@ class letter:
         self.attributes = map(float, input[1:])
         # scale each data value to be between 0 and 1 by dividing by 15 (max val = 15)
         self.attributes = [i/max_letter_attribute_val for i in self.attributes]
+        self.target = 0
