@@ -122,8 +122,17 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     # preserve weights to revert if necessary
     # saved_bias = np.array([])
     # saved_weights = np.array([])
-    saved_bias = (perceptrons[m+n].bias).copy()
-    saved_weights = (perceptrons[m+n].weights).copy()
+    saved_bias = np.array(perceptrons[m+n].bias)
+    # print saved_bias == np.array(perceptrons[m+n].bias)[0]
+    # print np.array(perceptrons[m+n].bias)[0]
+    print saved_bias is np.array(perceptrons[m+n].bias)
+    try:
+        saved_weights
+    except NameError:
+        saved_weights = np.array([])
+    for i in range(0, len(np.array(perceptrons[m+n].weights))):
+        saved_weights = np.append(saved_weights, np.array(perceptrons[m+n].weights)[i])
+        # saved_weights.append(np.array(perceptrons[m+n].weights)[i])
     print "Saved bias and weights: "
     print saved_bias
     print saved_weights
@@ -137,26 +146,37 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
         #       - Revert weights if accuracy goes down
         #       - Break if accuracy has not improved
 
-        saved_bias = (perceptrons[m+n].bias).copy()
-        saved_weights = (perceptrons[m+n].weights).copy()
+        saved_bias = np.array(perceptrons[m+n].bias)
+        #print dir(np.array(perceptrons[m+n].bias))
+        print saved_bias is np.array(perceptrons[m+n].bias)
+        saved_weights = np.array([])
+        for i in range(0, len(np.array(perceptrons[m+n].weights))):
+            saved_weights = np.append(saved_weights, np.array(perceptrons[m+n].weights)[i])
+        print "Saved bias and weights in loop: "
+        print saved_bias
+        print saved_weights
         # 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
         # test_accuracy runs perceptron.test() function for all matching letter instances
-        num_accurate = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
+        # num_accurate = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
+        num_accurate = perceptrons[m+n].test_accuracy(matching_letters)
         print "\nStart of epoch", i
         print "num accurate:", num_accurate
 
         # 2) Train perceptron
         for letter in matching_letters:
-            output = perceptron.test(perceptrons[m+n], letter.attributes)
+            # output = perceptron.test(perceptrons[m+n], letter.attributes)
+            output = perceptrons[m+n].test(letter.attributes)
             # if perceptron doesn't return the expect output,
             # run training on perceptron to modify the weights
             if output != letter.target:
-                perceptron.train(perceptrons[m+n], letter.attributes, letter.target)
+                # perceptron.train(perceptrons[m+n], letter.attributes, letter.target)
+                perceptrons[m+n].train(letter.attributes, letter.target)
 
         # 3) Test accuracy after weights have been updated
         # After weights have been updated, test accuracy of perceptron again
         # Revert weights if need be
-        num_accurate_revised = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
+        # num_accurate_revised = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
+        num_accurate_revised = perceptrons[m+n].test_accuracy(matching_letters)
         print "End of epoch, num accurate: ", num_accurate_revised
         # can use num_accurate at the end of the epoch
         #  as the num_accurate for the start of the next epoch
@@ -164,7 +184,8 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
         # revert weights if accuracy has worsened
         if(num_accurate_revised < num_accurate):
             print "Accuracy worse, revert weights"
-            perceptron.revert_weights(perceptrons[m+n], saved_bias, saved_weights)
+            # perceptron.revert_weights(perceptrons[m+n], saved_bias, saved_weights)
+            perceptrons[m+n].revert_weights(saved_bias, saved_weights)
 
         # stop training if accuracy stops improving
         if (num_accurate_revised == num_accurate):

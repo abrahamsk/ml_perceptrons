@@ -12,9 +12,9 @@ max_letter_attribute_val = 15
 class letter:
     """Letter entity class
     contains alphabet letter value and dataset attributes"""
-    value = None # alphabet letter
-    attributes = []  # 16 numerical attributes for a letter from the data set
-    target = 0
+    # value = None # alphabet letter
+    # attributes = []  # 16 numerical attributes for a letter from the data set
+    # target = 0
 
     def __init__(self, input):
         """

@@ -11,13 +11,15 @@ import random as random
 eta = 0.2 # learning rate is 0.2 for training perceptrons
 
 class perceptron:
-    """ Perceptron entity class
-     contains bias and weights """
-    bias =  np.array([random.uniform(-.999999999999, .999999999999)])  # weight0 is the bias, 1 bias per perceptron
-    prev_bias = np.array([]) # store prev bias when you update bias
-    # 16 weights for perceptron, seeded randomly with values from 0-1
-    # Total of 17 weights, including the bias
-    weights = np.array([random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
+
+    def __init__(self):
+        """ Perceptron entity class
+        contains bias and weights """
+        self.bias =  np.array([random.uniform(-.999999999999, .999999999999)])  # weight0 is the bias, 1 bias per perceptron
+        # self.prev_bias = np.array([]) # store prev bias when you update bias
+        # 16 weights for perceptron, seeded randomly with values from 0-1
+        # Total of 17 weights, including the bias
+        self.weights = np.array([random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
@@ -25,13 +27,10 @@ class perceptron:
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999)])
-    prev_weights = np.array([]) # store prev weights when you update weights
+        # self.prev_weights = np.array([]) # store prev weights when you update weights
 
-    # bool to mark whether output from perceptron is correct during training
-    is_result_correct = None
-
-    def __init__(self):
-        """ init perceptron """
+        # bool to mark whether output from perceptron is correct during training
+        self.is_result_correct = None
         return
 
     def test_accuracy(self, instances):
@@ -46,7 +45,7 @@ class perceptron:
         # that match the letters in perceptron name
         for i in range(len(instances)):
             #print instances[i].attributes
-            if perceptron.test(self, instances[i].attributes) == instances[i].target:
+            if self.test(instances[i].attributes) == instances[i].target:
                num_accurate += 1
 
         return num_accurate
@@ -110,7 +109,20 @@ class perceptron:
         # run test on perceptron and return the output from the perceptron
         # return true if bias + the dot product of weights and inputs is geq 0
         # signum function, tells if the sign of the test is correct
-        return self.bias + np.dot(self.weights, inputs) >= 0
+        # print self.bias[0]
+        # print np.dot(self.weights, inputs)
+        # print len(inputs)
+        # print inputs
+        try:
+            return (self.bias[0] + np.dot(self.weights, inputs)) >= 0
+        except:
+            print self.bias[0]
+            print self.weights
+            # print np.dot(self.weights, inputs)
+            print len(inputs)
+            print len(self.weights)
+            print inputs
+            raise
 
     def set_incorrect_result(self):
         """
@@ -133,5 +145,14 @@ class perceptron:
         of stochastic descent changes are getting worse
         """
         self.bias = saved_bias.copy()
-        self.weight = saved_weights.copy()
+        self.weights = saved_weights.copy()
+        # print dir(saved_bias)
+        # print type(saved_bias)
+        # print type(saved_weights)
+        # # self.weights = saved_weights.copy()
+        # # print len(saved_weights)
+        # for i in range(0, len(saved_weights)-1):
+        #     self.weights[i] = saved_weights[i]
+        #print dir(saved_weights)
+
         return
