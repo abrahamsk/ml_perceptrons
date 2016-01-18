@@ -65,7 +65,7 @@ for letter in letters_list_testing:
         actual_letter = str(letter.value[0])
         # print "actual letter ", actual_letter
         output = perceptron.test(perceptrons[m + n], letter.attributes)
-        if output == True: # perceptron guessed first letter (i in perceptron[ij])
+        if output == letter.target: # perceptron guessed first letter (i in perceptron[ij])
             ###pprint.pprint(votes)
             ###pprint.pprint(actual_letter)
             #votes[actual_letter] += 1 # record a vote for that letter

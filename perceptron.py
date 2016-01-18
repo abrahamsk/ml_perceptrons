@@ -116,12 +116,12 @@ class perceptron:
         try:
             return (self.bias[0] + np.dot(self.weights, inputs)) >= 0
         except:
-            print self.bias[0]
-            print self.weights
-            # print np.dot(self.weights, inputs)
-            print len(inputs)
-            print len(self.weights)
-            print inputs
+            # print self.bias[0]
+            # print self.weights
+            # # print np.dot(self.weights, inputs)
+            # print len(inputs)
+            # print len(self.weights)
+            # print inputs
             raise
 
     def set_incorrect_result(self):

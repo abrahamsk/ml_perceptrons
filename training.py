@@ -11,6 +11,12 @@ import letter
 from input import letters_list_training
 import random
 import numpy as np
+from itertools import islice
+
+# function from islice to take a portion of a dictionary
+def take(n, iterable):
+    "Return first n items of the iterable as a list"
+    return list(islice(iterable, n))
 
 # get stats for perceptron run
 def get_stats(correct_output, incorrect_output, accuracy, accuracy_prev):
@@ -38,9 +44,17 @@ for letter1 in string.ascii_uppercase:
     for letter2 in string.ascii_uppercase:
         if letter1 != letter2:
             if letter2 + letter1 not in perceptrons:
-                # perceptrons[i+j] = {w0":0.1,"w1":0.2,"w3":0.3}
                 letters_combined = letter1 + letter2
                 perceptrons[letters_combined] = perceptron()
+
+# sublist of letters for testing
+perceptrons_sublist = {}
+for letter1 in string.ascii_uppercase[0:5]:
+    for letter2 in string.ascii_uppercase[0:5]:
+        if letter1 != letter2:
+            if letter2 + letter1 not in perceptrons:
+                letters_combined = letter1 + letter2
+                perceptrons_sublist[letters_combined] = perceptron()
 
 # print perceptrons
 # print perceptrons['AB']
@@ -93,11 +107,16 @@ random.shuffle(letters_list_training)
 # for letter in letters_list_training:
 #     print letter.value[0]
 
+# get a slice of the perceptrons dictionary to test training algorithm
+# perceptrons_sublist = take(5, perceptrons.iteritems())
+# for g, h in perceptrons_sublist:
+#     print "sublist weights", perceptrons_sublist[g+h].weights
+
 perceptron_count = 1
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
     print m, n
 
-    print "Training perceptron",perceptron_count,"/", len(perceptrons[0:5])
+    print "Training perceptron",perceptron_count,"/", len(perceptrons)
     perceptron_count += 1
     # collect matching letters m,n to train perceptron[mn]
     for letter in letters_list_training:
@@ -125,7 +144,7 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     saved_bias = np.array(perceptrons[m+n].bias)
     # print saved_bias == np.array(perceptrons[m+n].bias)[0]
     # print np.array(perceptrons[m+n].bias)[0]
-    print saved_bias is np.array(perceptrons[m+n].bias)
+    #print saved_bias is np.array(perceptrons[m+n].bias)
     try:
         saved_weights
     except NameError:
@@ -147,8 +166,6 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
         #       - Break if accuracy has not improved
 
         saved_bias = np.array(perceptrons[m+n].bias)
-        #print dir(np.array(perceptrons[m+n].bias))
-        print saved_bias is np.array(perceptrons[m+n].bias)
         saved_weights = np.array([])
         for i in range(0, len(np.array(perceptrons[m+n].weights))):
             saved_weights = np.append(saved_weights, np.array(perceptrons[m+n].weights)[i])
