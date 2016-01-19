@@ -127,6 +127,13 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
         #       - Revert weights if accuracy goes down
         #       - Break if accuracy has not improved
 
+        # 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
+        # test_accuracy runs perceptron.test() function for all matching letter instances
+        # num_accurate = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
+        num_accurate = perceptrons_sublist[m+n].test_accuracy(matching_letters)
+        print "\nStart of epoch", j
+        print "num accurate:", num_accurate
+
         saved_bias = np.array(perceptrons_sublist[m+n].bias)
         saved_weights = np.array([])
         for i in range(0, len(np.array(perceptrons_sublist[m+n].weights))):
@@ -134,12 +141,7 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
         print "Saved bias and weights in loop: "
         print saved_bias
         print saved_weights
-        # 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
-        # test_accuracy runs perceptron.test() function for all matching letter instances
-        # num_accurate = perceptron.test_accuracy(perceptrons[m+n], matching_letters)
-        num_accurate = perceptrons_sublist[m+n].test_accuracy(matching_letters)
-        print "\nStart of epoch", j
-        print "num accurate:", num_accurate
+
 
         # 2) Train perceptron
         for letter in matching_letters[0:5]:
@@ -175,3 +177,7 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
             if epochs != 0:
                 print "No accuracy improvement, stopping training"
                 break
+
+        # set accuracy to revised accuracy computed for this instance
+        # for next epoch
+        num_accurate = num_accurate_revised

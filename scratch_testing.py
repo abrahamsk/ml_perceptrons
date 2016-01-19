@@ -25,10 +25,6 @@ accuracy = 0.0
 # set up confusion matrix
 y_actu = []
 y_pred = []
-# dictionary for votes for letters (all alphabet letters valued at 0 to count votes)
-intermed_votes = {c:i for i, c in enumerate(string.ascii_uppercase, 1)}
-#print intermed_votes
-votes = dict.fromkeys(intermed_votes.iterkeys(), 0)
 
 # convert list of letters to tuple to use as dictionary key
 ###letters_tup_testing = tuple(letters_list_testing)
@@ -62,6 +58,11 @@ letter_and_guess = []
 # shuffle letters
 random.shuffle(letters_list_testing)
 for letter in letters_list_testing:
+    # dictionary for votes for letters (all alphabet letters valued at 0 to count votes)
+    intermed_votes = {c:i for i, c in enumerate(string.ascii_uppercase, 1)}
+    #print intermed_votes
+    votes = dict.fromkeys(intermed_votes.iterkeys(), 0)
+
     #print letter.value[0]
     actual_letter = str(letter.value[0])
     print "actual letter:", actual_letter
