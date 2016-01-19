@@ -33,7 +33,7 @@ class perceptron:
         self.is_result_correct = None
         return
 
-    def test_accuracy(self, instances):
+    def test_accuracy(self, matching_letters):
         """
         Test the accuracy of a perceptron for a given set of inputs
         :param inputs:
@@ -43,9 +43,9 @@ class perceptron:
 
         # run test function for all instances in training set
         # that match the letters in perceptron name
-        for i in range(len(instances)):
-            #print instances[i].attributes
-            if self.test(instances[i].attributes) == instances[i].target:
+        for i in range(len(matching_letters)):
+            #print matching_letters[i].attributes
+            if self.test(matching_letters[i].attributes) == matching_letters[i].target:
                num_accurate += 1
 
         return num_accurate
@@ -59,11 +59,6 @@ class perceptron:
         train perceptron using weight changes
         for use with stochastic gradient descent
         """
-        # x, expected = choice(training_data)
-        # result = dot(w, x)
-        # error = expected - unit_step(result)
-        # errors.append(error)
-        # w += eta * error * x
 
         # update weights after storing previous weight values
         ####print "bias + " + self.bias + "eta * 1 * target " + target

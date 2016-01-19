@@ -13,26 +13,8 @@ import random
 import numpy as np
 from itertools import islice
 
-# function from islice to take a portion of a dictionary
-def take(n, iterable):
-    "Return first n items of the iterable as a list"
-    return list(islice(iterable, n))
-
-# get stats for perceptron run
-def get_stats(correct_output, incorrect_output, accuracy, accuracy_prev):
-    print "correct: ", correct_output
-    print "incorrect: ", incorrect_output
-    total = correct_output + incorrect_output
-    print "total: ", total
-
-    print "accuracy before comparison ", accuracy
-    print "prev accuracy before comparison ", accuracy_prev
-
-    return total
-
-
 eta = 0.2  # learning rate is 0.2 for training perceptrons
-epochs = 2 # number of training epochs
+epochs = 4 # number of training epochs
 
 ###    print letters_list_training[i].value
 ###    print letters_list_training[i].attributes
@@ -55,6 +37,10 @@ for letter1 in string.ascii_uppercase[0:5]:
             if letter2 + letter1 not in perceptrons_sublist:
                 letters_combined = letter1 + letter2
                 perceptrons_sublist[letters_combined] = perceptron()
+
+print "perceptron sublist"
+for m, n in perceptrons_sublist:
+    print m, n
 
 # for g, h in perceptrons_sublist:
 #     print perceptrons_sublist[g+h].bias
@@ -85,24 +71,25 @@ random.shuffle(letters_list_training)
 # for g, h in perceptrons_sublist:
 #     print "sublist weights", perceptrons_sublist[g+h].weights
 
-perceptron_count = 1
+perceptron_increment = 1
 for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron representation (perceptron[kv])
     print m, n
 
-    print "Training perceptron",perceptron_count,"/", len(perceptrons_sublist)
-    perceptron_count += 1
+    print "Training perceptron",perceptron_increment,"/", len(perceptrons_sublist)
+    perceptron_increment += 1
     # collect matching letters m,n to train perceptron[mn]
+    matching_letters = []
     for letter in letters_list_training:
         if m in letter.value:
             matching_letters.append(letter)
             # for letter in matching_letters:
             #     print letter.value
             #     print letter.attributes
-            # match letter m to target 1
+            # set letter m to target 1
             letter.target = 1
         if n in letter.value:
             matching_letters.append(letter)
-            # match letter n to target -1
+            # set letter n to target -1
             letter.target = -1
     # shuffle list of inputs
     random.shuffle(matching_letters)
@@ -118,10 +105,12 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
     # print saved_bias == np.array(perceptrons[m+n].bias)[0]
     # print np.array(perceptrons[m+n].bias)[0]
     #print saved_bias is np.array(perceptrons[m+n].bias)
-    try:
-        saved_weights
-    except NameError:
-        saved_weights = np.array([])
+
+    # try:
+    #     saved_weights
+    # except NameError:
+    #     saved_weights = np.array([])
+    saved_weights = np.array([])
     for i in range(0, len(np.array(perceptrons_sublist[m+n].weights))):
         saved_weights = np.append(saved_weights, np.array(perceptrons_sublist[m+n].weights)[i])
         # saved_weights.append(np.array(perceptrons[m+n].weights)[i])
@@ -159,8 +148,12 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
             # if perceptron doesn't return the expect output,
             # run training on perceptron to modify the weights
             if output != letter.target:
+                print "output of perceptron test of", letter.value[0], "doesn't match target, train perceptron"
                 # perceptron.train(perceptrons[m+n], letter.attributes, letter.target)
                 perceptrons_sublist[m+n].train(letter.attributes, letter.target)
+            if output == letter.target:
+                print "output of perceptron test of", letter.value[0], "equals target, skip training"
+
 
         # 3) Test accuracy after weights have been updated
         # After weights have been updated, test accuracy of perceptron again

@@ -112,24 +112,25 @@ random.shuffle(letters_list_training)
 # for g, h in perceptrons_sublist:
 #     print "sublist weights", perceptrons_sublist[g+h].weights
 
-perceptron_count = 1
+perceptron_increment = 1
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
     print m, n
 
-    print "Training perceptron",perceptron_count,"/", len(perceptrons)
-    perceptron_count += 1
+    print "Training perceptron",perceptron_increment, "/", len(perceptrons)
+    perceptron_increment += 1
     # collect matching letters m,n to train perceptron[mn]
+    matching_letters = []
     for letter in letters_list_training:
         if m in letter.value:
             matching_letters.append(letter)
             # for letter in matching_letters:
             #     print letter.value
             #     print letter.attributes
-            # match letter m to target 1
+            # set letter m to target 1
             letter.target = 1
         if n in letter.value:
             matching_letters.append(letter)
-            # match letter n to target -1
+            # set letter n to target -1
             letter.target = -1
     # shuffle list of inputs
     random.shuffle(matching_letters)
@@ -145,10 +146,12 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     # print saved_bias == np.array(perceptrons[m+n].bias)[0]
     # print np.array(perceptrons[m+n].bias)[0]
     #print saved_bias is np.array(perceptrons[m+n].bias)
-    try:
-        saved_weights
-    except NameError:
-        saved_weights = np.array([])
+
+    # try:
+    #     saved_weights
+    # except NameError:
+    #     saved_weights = np.array([])
+    saved_weights = np.array([])
     for i in range(0, len(np.array(perceptrons[m+n].weights))):
         saved_weights = np.append(saved_weights, np.array(perceptrons[m+n].weights)[i])
         # saved_weights.append(np.array(perceptrons[m+n].weights)[i])

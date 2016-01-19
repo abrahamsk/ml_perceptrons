@@ -82,10 +82,12 @@ for letter in letters_list_testing:
             ###pprint.pprint(votes)
             ###pprint.pprint(actual_letter)
             votes[m] += 1
+            print "vote for", m
             # add to letter and guess tuple with actual letter and guessed letter
             letter_and_guess.append((actual_letter, m))
         else:
             votes[n] += 1
+            print "vote for", n
             # add to letter and guess tuple with actual letter and guessed letter
             letter_and_guess.append((actual_letter, n))
         # tally votes for letter guesses (get max of votes)
@@ -111,7 +113,9 @@ for letter in letters_list_testing:
     y_pred.append(selected_letter)
     y_actu.append(actual_letter)
 
-# accuracy is the number of correct votes/total votes
+    # accuracy is the number of correct votes/total votes
+    # accuracy = (# correct) / (all points in conf. matrix, including correct)
+    # diagonal of matrix / total
 
 # *********************
 # print "correct ", correct_test_output
