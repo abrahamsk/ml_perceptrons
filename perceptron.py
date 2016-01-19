@@ -4,9 +4,10 @@
 # HW 1: Perceptrons
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
-
+from __future__ import division # want float and not int division
 import numpy as np
 import random as random
+
 
 eta = 0.2 # learning rate is 0.2 for training perceptrons
 
@@ -47,9 +48,11 @@ class perceptron:
             #print matching_letters[i].attributes
             if self.test(matching_letters[i].attributes) == matching_letters[i].target:
                num_accurate += 1
-
-        # return percent accurate
-        return float(num_accurate/(len(matching_letters)))
+        # print "num accurate in test accuracy", num_accurate
+        # print "len of matching letters", len(matching_letters)
+        # print "accuracy computed:", num_accurate/(len(matching_letters))
+        #return percent accurate
+        return num_accurate/(len(matching_letters))
 
     def adjust_weights(self, inputs, target):
 

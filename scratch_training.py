@@ -27,15 +27,12 @@ matching_letters = []
 #       - Revert weights if accuracy goes down
 #       - Break if accuracy has not improved
 def training_epoch(perceptron):
-    print "matching letters in function"
-    for letter in matching_letters:
-        print letter.value
-    #    print letter.attributes
     # Step 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
     # test_accuracy runs perceptron.test() function for all matching letter instances
     accuracy = perceptron.test_accuracy(matching_letters)
     # adjust weights unless perceptron is already totally correct
     if accuracy < 1:
+        ###print "accuracy < 1: ", accuracy
         # Step 2) Train perceptron
         # make a new interim perceptron that will be saved if there's improvements
         ###new_contender = perceptron.adjust_weights(perceptron, letter.attributes, letter.target)
@@ -45,6 +42,7 @@ def training_epoch(perceptron):
         accuracy_new_weights = new_contender.test_accuracy(matching_letters)
         # use new weights if accuracy has improved
         if accuracy_new_weights > accuracy:
+            print "accuracy improved: new accuracy:", accuracy_new_weights, "old accuracy:", accuracy
             perceptron.update_weights(new_contender)
             return True # improvement has occurred
     else:
@@ -118,7 +116,7 @@ perceptron_increment = 1
 for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron representation (perceptron[kv])
     #print m, n
 
-    print "Training perceptron",perceptron_increment,"/", len(perceptrons_sublist)
+    print "\nTraining perceptron",perceptron_increment,"/", len(perceptrons_sublist)
     perceptron_increment += 1
     # collect matching letters m,n to train perceptron[mn]
     matching_letters = []
@@ -141,9 +139,9 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
     #     print letter.attributes
     #     print letter.target
 
-    print "matching letters outside of function",
-    for letter in matching_letters:
-        print letter.value
+    # print "matching letters outside of function",
+    # for letter in matching_letters:
+    #     print letter.value
     #    print letter.attributes
 
     # train perceptron
