@@ -8,7 +8,7 @@
 import string
 from perceptron import perceptron
 import letter
-from scratch_training import perceptrons_sublist, letters_list_training
+from scratch_training import perceptrons, letters_list_training
 from input import letters_list_testing
 from pandas_confusion import ConfusionMatrix
 import pprint
@@ -66,7 +66,7 @@ for letter in letters_list_testing:
     #print letter.value[0]
     actual_letter = str(letter.value[0])
     print "\nactual letter:", actual_letter
-    for m, n in perceptrons_sublist:
+    for m, n in perceptrons:
         ###print m, n
         # # set targets for letters
         # if m in letter.value:
@@ -78,7 +78,7 @@ for letter in letters_list_testing:
 
         # actual_letter = str(letter.value[0])
         # print "actual letter:", actual_letter
-        output = perceptrons_sublist[m+n].test(letter.attributes)
+        output = perceptrons[m+n].test(letter.attributes)
         if output == True: # perceptron outputs letter m
             ###pprint.pprint(votes)
             ###pprint.pprint(actual_letter)

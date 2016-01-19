@@ -48,9 +48,9 @@ class perceptron:
             #print matching_letters[i].attributes
             if self.test(matching_letters[i].attributes) == matching_letters[i].target:
                num_accurate += 1
-        # print "num accurate in test accuracy", num_accurate
-        # print "len of matching letters", len(matching_letters)
-        # print "accuracy computed:", num_accurate/(len(matching_letters))
+        print "num accurate in test accuracy", num_accurate
+        print "len of matching letters", len(matching_letters)
+        print "accuracy computed:", num_accurate/(len(matching_letters))
         #return percent accurate
         return num_accurate/(len(matching_letters))
 
@@ -68,7 +68,7 @@ class perceptron:
         # update weights after storing previous weight values
         ####print "bias + " + self.bias + "eta * 1 * target " + target
     #    self.prev_bias = self.bias.copy() # store prev bias when you update bias
-        self.bias = self.bias + eta * 1 * target # bias input is always +1
+        self.bias[0] = self.bias[0] + eta * 1 * target # bias input is always +1
         #self.weights = self.weights + eta * inputs * target
         # for w in np.nditer(self.weights, order='C'):
         #     print w
@@ -114,7 +114,13 @@ class perceptron:
         # print len(inputs)
         # print inputs
         try:
-            return (self.bias[0] + np.dot(self.weights, inputs)) >= 0
+            result = (self.bias[0] + np.dot(self.weights, inputs) >= 0)
+            #np.sign(self.bias[0] + np.dot(self.weights, inputs))
+            if(result == True):
+                return 1
+            else:
+                return -1
+
         except:
             # print self.bias[0]
             # print self.weights
