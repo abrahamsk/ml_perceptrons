@@ -27,6 +27,10 @@ matching_letters = []
 #       - Revert weights if accuracy goes down
 #       - Break if accuracy has not improved
 def training_epoch(perceptron):
+    print "matching letters in function"
+    for letter in matching_letters:
+        print letter.value
+    #    print letter.attributes
     # Step 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
     # test_accuracy runs perceptron.test() function for all matching letter instances
     accuracy = perceptron.test_accuracy(matching_letters)
@@ -70,16 +74,16 @@ def train(perceptron):
 
 # sublist of letters for testing
 perceptrons_sublist = {}
-for letter1 in string.ascii_uppercase[0:5]:
-    for letter2 in string.ascii_uppercase[0:5]:
+for letter1 in string.ascii_uppercase:
+    for letter2 in string.ascii_uppercase:
         if letter1 != letter2:
             if letter2 + letter1 not in perceptrons_sublist:
                 letters_combined = letter1 + letter2
                 perceptrons_sublist[letters_combined] = perceptron()
 
-print "perceptron sublist"
-for m, n in perceptrons_sublist:
-    print m, n
+# print "perceptron sublist"
+# for m, n in perceptrons_sublist:
+#     print m, n
 
 # for g, h in perceptrons_sublist:
 #     print perceptrons_sublist[g+h].bias
@@ -112,7 +116,7 @@ random.shuffle(letters_list_training)
 
 perceptron_increment = 1
 for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron representation (perceptron[kv])
-    print m, n
+    #print m, n
 
     print "Training perceptron",perceptron_increment,"/", len(perceptrons_sublist)
     perceptron_increment += 1
@@ -136,6 +140,11 @@ for m, n in perceptrons_sublist: #m, n are the two letters in the perceptron rep
     #     print letter.value
     #     print letter.attributes
     #     print letter.target
+
+    print "matching letters outside of function",
+    for letter in matching_letters:
+        print letter.value
+    #    print letter.attributes
 
     # train perceptron
     train(perceptrons_sublist[m+n])

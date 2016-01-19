@@ -65,9 +65,9 @@ for letter in letters_list_testing:
 
     #print letter.value[0]
     actual_letter = str(letter.value[0])
-    print "actual letter:", actual_letter
+    print "\nactual letter:", actual_letter
     for m, n in perceptrons_sublist:
-        print m, n
+        ###print m, n
         # # set targets for letters
         # if m in letter.value:
         #     # match letter m to target 1
@@ -83,12 +83,12 @@ for letter in letters_list_testing:
             ###pprint.pprint(votes)
             ###pprint.pprint(actual_letter)
             votes[m] += 1
-            print "vote for", m
+            ###print "vote for", m
             # add to letter and guess tuple with actual letter and guessed letter
             letter_and_guess.append((actual_letter, m))
         else:
             votes[n] += 1
-            print "vote for", n
+            ##print "vote for", n
             # add to letter and guess tuple with actual letter and guessed letter
             letter_and_guess.append((actual_letter, n))
         # tally votes for letter guesses (get max of votes)
@@ -102,12 +102,12 @@ for letter in letters_list_testing:
     # find max values in votes to break tie
     max_value = max(votes.values())
     letter_winner_candidates = [key for key in votes if votes[key] == max_value]
-    print "candidates for selected letter:", letter_winner_candidates
+    ###print "candidates for selected letter:", letter_winner_candidates
     # break ties at random, seed random number with number of keys
     # that have votes matching the max number of votes
-    print len(letter_winner_candidates)
+    ###print len(letter_winner_candidates)
     tie_breaker = (random.randint(0, 1000) % len(letter_winner_candidates))
-    print "tie breaker index:", tie_breaker
+    ###print "tie breaker index:", tie_breaker
     selected_letter = letter_winner_candidates[tie_breaker]
     print "Winning letter by vote:", selected_letter
     # append to confusion matrix
@@ -136,6 +136,6 @@ for letter in letters_list_testing:
 
 # make confusion matrix out
 cm = ConfusionMatrix(y_actu, y_pred)
-print("Confusion matrix:\n%s" % cm)
+###print("Confusion matrix:\n%s" % cm)
 cm.print_stats()
 
