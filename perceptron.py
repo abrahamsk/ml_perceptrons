@@ -48,9 +48,10 @@ class perceptron:
             if self.test(matching_letters[i].attributes) == matching_letters[i].target:
                num_accurate += 1
 
-        return num_accurate
+        # return percent accurate
+        return float(num_accurate/(len(matching_letters)))
 
-    def train(self, inputs, target):
+    def adjust_weights(self, inputs, target):
 
         """
         :param inputs:
@@ -59,6 +60,7 @@ class perceptron:
         train perceptron using weight changes
         for use with stochastic gradient descent
         """
+
 
         # update weights after storing previous weight values
         ####print "bias + " + self.bias + "eta * 1 * target " + target
@@ -149,5 +151,16 @@ class perceptron:
         # for i in range(0, len(saved_weights)-1):
         #     self.weights[i] = saved_weights[i]
         #print dir(saved_weights)
+
+        return
+
+    def update_weights(self, perceptron):
+        """
+        set weights if results
+        of stochastic descent changes are improving
+        """
+        self.bias = perceptron.bias.copy()
+        self.weights = perceptron.weights.copy()
+
 
         return
