@@ -5,51 +5,48 @@
 # Katie Abrahams, abrahake@pdx.edu
 # 1/19/16
 
-import string
 from perceptron import perceptron
-import letter
 from input import letters_list_training
-import random
-import numpy as np
-import copy
+import random, copy, sys, string
 
-# #---------------------
-# # function definitions
-# #---------------------
-#
-#
-# def training_epoch(perceptron, p_id):
-#     # run all training instances through perceptron
-#     # adjust weights if perceptron isn't 100% accurate
-#     # return true if epoch improved perceptron accuracy
-#     # false otherwise
-#
-#     #shuffle training data
-#     random.shuffle(matching_letters)
-#
-#     initial_accuracy = perceptron.test_accuracy(p_id)
-#     if initial_accuracy < 1.0:
-#         # change at least one weight if perceptron isn't accurate for all instances
-#         # make a temp perceptron to change weights and test without committing weight changes yet
-#         new_contender = copy.deepcopy(perceptron)
-#         # adjust weights if test for instance is wrong
-#         # don't need to pass in matching letters, it's a global
-#         new_contender.adjust_weights(p_id)
-#
-#         # test accuracy of new weights
-#         new_accuracy = new_contender.test_accuracy()
-#         if new_accuracy > initial_accuracy:
-#             # commit weight changes
-#             return True # perceptron has been improved
-#     return False # no improvements made
-#
-# def train(perceptron, p_id):
-#     # run one perceptron through epochs until false is returned from training_epoch
-#     run_again = True
-#     while (run_again):
-#         run_again = training_epoch(perceptron, p_id)
-#     return
+#---------------------
+# function definitions
+#---------------------
 
+def training_epoch(perceptron, p_id):
+    # run all training instances through perceptron
+    # adjust weights if perceptron isn't 100% accurate
+    # return true if epoch improved perceptron accuracy
+    # false otherwise
+
+    #shuffle training data
+    random.shuffle(letters_list_training)
+
+    initial_accuracy = perceptron.test_accuracy(p_id)
+
+    ####print "initial accuracy", initial_accuracy
+    if initial_accuracy < 1.0:
+        # change at least one weight if perceptron isn't accurate for all instances
+        # make a temp perceptron to change weights and test without committing weight changes yet
+        new_contender = copy.deepcopy(perceptron)
+        # adjust weights if test for instance is wrong
+        # don't need to pass in matching letters, it's a global
+        new_contender.adjust_weights(p_id)
+        # test accuracy of new weights
+        new_accuracy = new_contender.test_accuracy(p_id)
+        ### print "new accuracy", new_accuracy
+        if new_accuracy > initial_accuracy:
+            # commit weight changes
+            perceptron.update_weights(new_contender)
+            return True # perceptron has been improved
+    return False # no improvements made
+
+def train(perceptron, p_id):
+    # run one perceptron through epochs until false is returned from training_epoch
+    run_again = True
+    while (run_again):
+        run_again = training_epoch(perceptron, p_id)
+    return
 
 #----------------
 # data structures
@@ -64,7 +61,6 @@ for letter1 in string.ascii_uppercase:
                 letters_combined = letter1 + letter2
                 perceptrons[letters_combined] = perceptron()
 
-print perceptrons
 # loop through dictionary of perceptron instances
 # and train perceptron for matching input
 # e.g. perceptron[AB] gets all A and all B training instances
@@ -78,13 +74,13 @@ print perceptrons
 #---------
 # main
 #---------
-# perceptron_increment = 1
+perceptron_increment = 1
 #
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
-     print m, n
-    # text = "\rTraining perceptron "+str(perceptron_increment)+"/"+str(len(perceptrons))
-    # sys.stdout.write(text)
-    # perceptron_increment += 1
-
+    # print "---------------------------------------",m, n
+    text = "\rTraining perceptron "+str(perceptron_increment)+"/"+str(len(perceptrons))
+    sys.stdout.write(text)
+    perceptron_increment += 1
     # train this perceptron for all training instances
-    # train(perceptrons[m+n], m+n)
+    train(perceptrons[m+n], m+n)
+    #train(perceptron[m+n], m+n)

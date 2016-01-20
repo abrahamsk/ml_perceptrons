@@ -40,10 +40,9 @@ class perceptron:
 
         # iterate through training data
         for instance in letters_list_training:
-            if instance.value in p_id:
+            if instance.value[0] in p_id:
                 # if instance letter value is in perceptron ID, run test on perceptron using instance
                 choice_num = self.test_instance(instance.attributes)
-
                 # choose targets for return from perceptron function
                 if choice_num == -1:
                     # perceptron chose p_id[0], map -1 from perceptron to choice 0 in p_id
@@ -54,7 +53,7 @@ class perceptron:
                     choice_alpha = p_id[1]
 
                 # choice matches letter target, test is correct
-                if choice_alpha == instance.value:
+                if choice_alpha == instance.value[0]:
                     num_accurate += 1
                 total += 1
         return num_accurate/total
@@ -74,13 +73,13 @@ class perceptron:
         for instance in letters_list_training:
             # declare target for instance
             target = int
-            if instance.value in p_id:
+            if instance.value[0] in p_id:
                 # if instance letter value is in perceptron ID, run test on perceptron using instance
                 choice_num = self.test_instance(instance.attributes)
 
                 # if instance value is found in p_id[0], target is -1
                 # else target is 1
-                if instance.value == p_id[0]:
+                if instance.value[0] == p_id[0]:
                     target = -1
                 else:
                     target = 1
@@ -92,19 +91,6 @@ class perceptron:
                         self.weights[i] = self.weights[i] + eta * instance.attributes[i] * target
         return
 
-    def save_bias(self):
-        """
-        Preserve the bias to revert if need be after epoch
-        :return: bias
-        """
-        return self.bias
-
-    def save_weights(self):
-        """
-        Preserve the weights to revert if need be after epoch
-        :return: weights
-        """
-        return self.weights
 
     def test_instance(self, inputs):
         """
@@ -129,39 +115,6 @@ class perceptron:
             return -1
 
 
-    def set_incorrect_result(self):
-        """
-        record that perceptron returned an incorrect result
-        such that output  y neq target t
-        """
-        self.is_result_correct = False
-        return
-
-    def check_result(self):
-        """
-        :return whether perceptron was marked as having incorrect results:
-        """
-        return self.is_result_correct
-
-
-    def revert_weights(self, saved_bias, saved_weights):
-        """
-        reset weights to previous values if results
-        of stochastic descent changes are getting worse
-        """
-        self.bias = saved_bias.copy()
-        self.weights = saved_weights.copy()
-        # print dir(saved_bias)
-        # print type(saved_bias)
-        # print type(saved_weights)
-        # # self.weights = saved_weights.copy()
-        # # print len(saved_weights)
-        # for i in range(0, len(saved_weights)-1):
-        #     self.weights[i] = saved_weights[i]
-        #print dir(saved_weights)
-
-        return
-
     def update_weights(self, perceptron):
         """
         set weights if results
@@ -169,6 +122,4 @@ class perceptron:
         """
         self.bias = perceptron.bias.copy()
         self.weights = perceptron.weights.copy()
-
-
         return
