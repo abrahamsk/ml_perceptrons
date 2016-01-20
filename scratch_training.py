@@ -26,10 +26,12 @@ matching_letters = []
 #   3. End of epoch: test accuracy
 #       - Revert weights if accuracy goes down
 #       - Break if accuracy has not improved
-def training_epoch(perceptron):
+def training_epoch(perceptron, p_id):
     # Step 1) Test accuracy of perceptron[mn] for the matching letters [m] or [n]
     # test_accuracy runs perceptron.test() function for all matching letter instances
-    accuracy = perceptron.test_accuracy(matching_letters)
+    #print p_id, "-Training epoch--------------------"
+    # accuracy = perceptron.test_accuracy(matching_letters)
+    print accuracy
     # adjust weights unless perceptron is already totally correct
     if accuracy < 1.0:
         print "accuracy < 1: ", accuracy
@@ -37,15 +39,24 @@ def training_epoch(perceptron):
         # make a new interim perceptron that will be saved if there's improvements
         ###new_contender = perceptron.adjust_weights(perceptron, letter.attributes, letter.target)
         new_contender = copy.deepcopy(perceptron)
-        new_contender.adjust_weights(letter.attributes, letter.target)
+        #print new_contender.weights
+        # print "\n", perceptron.weights
+        random.shuffle(matching_letters)
+        for letter in matching_letters:
+            #print "letter val + target", letter.value, letter.target
+            if letter.value[0] in p_id:
+                #print "training", p_id, "with", letter.value[0]
+                new_contender.adjust_weights(letter.attributes, letter.target)
         # get the accuracy for the new potential perceptron
+        #print "\n", new_contender.weights
         accuracy_new_weights = new_contender.test_accuracy(matching_letters)
-        print "accuracy new weights", accuracy_new_weights
-        # use new weights if accuracy has improved
-        if accuracy_new_weights > accuracy:
-            print "accuracy improved: new accuracy:", accuracy_new_weights, "old accuracy:", accuracy
-            perceptron.update_weights(new_contender)
-            return True # improvement has occurred
+        return accuracy_new_weights
+        ##print "accuracy new weights", accuracy_new_weights
+        # # use new weights if accuracy has improved
+        # if accuracy_new_weights > accuracy:
+        #     ##print "accuracy improved: new accuracy:", accuracy_new_weights, "old accuracy:", accuracy
+        #     perceptron.update_weights(new_contender)
+        #     return True # improvement has occurred
     else:
         # no training needed
         print "no improvement"
@@ -53,11 +64,19 @@ def training_epoch(perceptron):
 
 
 # train perceptron until accuracy stops improving
-def train(perceptron):
+def train(perceptron,  p_id):
+    print p_id
+
     another_epoch = True
     while another_epoch:
         print "Running training"
-        another_epoch = training_epoch(perceptron)
+        # test accuracy for perceptron for training set after
+        ###accuracy = perceptron.test_accuracy(matching_letters)
+        another_epoch = training_epoch(perceptron,  p_id)
+                # use new weights if accuracy has improved
+        # if accuracy_new_weights > accuracy:
+        #     ##print "accuracy improved: new accuracy:", accuracy_new_weights, "old accuracy:", accuracy
+        #     perceptron.update_weights(new_contender)
     return
 
 ###    print letters_list_training[i].value
@@ -117,11 +136,12 @@ random.shuffle(letters_list_training)
 
 perceptron_increment = 1
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
-    #print m, n
+    print m, n
 
     print "\nTraining perceptron",perceptron_increment,"/", len(perceptrons)
     perceptron_increment += 1
     # collect matching letters m,n to train perceptron[mn]
+    # could also use nd array with numpy to create a matrix instead of a for loop
     matching_letters = []
     for letter in letters_list_training:
         if m in letter.value:
@@ -137,8 +157,9 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
             letter.target = -1
     # shuffle list of inputs
     random.shuffle(matching_letters)
+    #print matching_letters
     # for letter in matching_letters:
-    #     print letter.value
+    #     print letter.value#, letter.attribute, letter.target
     #     print letter.attributes
     #     print letter.target
 
@@ -148,7 +169,7 @@ for m, n in perceptrons: #m, n are the two letters in the perceptron representat
     #    print letter.attributes
 
     # train perceptron
-    train(perceptrons[m+n])
+    train(perceptrons[m+n], m+n)
 
     # # preserve weights to revert if necessary
     # # saved_bias = np.array([])

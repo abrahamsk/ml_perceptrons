@@ -7,7 +7,7 @@
 from __future__ import division # want float and not int division
 import numpy as np
 import random as random
-
+from input import letters_list_training
 
 eta = 0.2 # learning rate is 0.2 for training perceptrons
 
@@ -17,7 +17,6 @@ class perceptron:
         """ Perceptron entity class
         contains bias and weights """
         self.bias =  np.array([random.uniform(-.999999999999, .999999999999)])  # weight0 is the bias, 1 bias per perceptron
-        # self.prev_bias = np.array([]) # store prev bias when you update bias
         # 16 weights for perceptron, seeded randomly with values from 0-1
         # Total of 17 weights, including the bias
         self.weights = np.array([random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
@@ -28,62 +27,69 @@ class perceptron:
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999),
                         random.uniform(-.999999999999, .999999999999), random.uniform(-.999999999999, .999999999999)])
-        # self.prev_weights = np.array([]) # store prev weights when you update weights
 
-        # bool to mark whether output from perceptron is correct during training
-        self.is_result_correct = None
-        return
-
-    def test_accuracy(self, matching_letters):
+    def test_accuracy(self, p_id):
         """
         Test the accuracy of a perceptron for a given set of inputs
-        :param inputs:
+        :param id of perceptron:
         :return: the number of accurate results for a given data set
         """
         num_accurate = 0
+        total = 0
+        choice_alpha = ""
 
-        # run test function for all instances in training set
-        # that match the letters in perceptron name
-        for i in range(len(matching_letters)):
-            #print matching_letters[i].attributes
-            if self.test(matching_letters[i].attributes) == matching_letters[i].target:
-               num_accurate += 1
-        print "num accurate in test accuracy", num_accurate
-        print "len of matching letters", len(matching_letters)
-        print "accuracy computed:", num_accurate/(len(matching_letters))
-        #return percent accurate
-        return num_accurate/(len(matching_letters))
+        # iterate through training data
+        for instance in letters_list_training:
+            if instance.value in p_id:
+                # if instance letter value is in perceptron ID, run test on perceptron using instance
+                choice_num = self.test_instance(instance.attributes)
 
-    def adjust_weights(self, inputs, target):
+                # choose targets for return from perceptron function
+                if choice_num == -1:
+                    # perceptron chose p_id[0], map -1 from perceptron to choice 0 in p_id
+                    # anytime perceptron returns -1, it chose choice p_id[0]
+                    choice_alpha = p_id[0]
+                else:
+                    # mapping p_id[1] to choice 1
+                    choice_alpha = p_id[1]
+
+                # choice matches letter target, test is correct
+                if choice_alpha == instance.value:
+                    num_accurate += 1
+                total += 1
+        return num_accurate/total
+
+    def adjust_weights(self, p_id):
 
         """
-        :param inputs:
+        :param p_id:
         :param target:
         :return perceptron output y = sgn(dot product(w,x)):
         train perceptron using weight changes
         for use with stochastic gradient descent
         """
+        #print "---Adjust weights---"
 
+        # iterate over the set of instances to find matching values
+        for instance in letters_list_training:
+            # declare target for instance
+            target = int
+            if instance.value in p_id:
+                # if instance letter value is in perceptron ID, run test on perceptron using instance
+                choice_num = self.test_instance(instance.attributes)
 
-        # update weights after storing previous weight values
-        ####print "bias + " + self.bias + "eta * 1 * target " + target
-    #    self.prev_bias = self.bias.copy() # store prev bias when you update bias
-        self.bias[0] = self.bias[0] + eta * 1 * target # bias input is always +1
-        #self.weights = self.weights + eta * inputs * target
-        # for w in np.nditer(self.weights, order='C'):
-        #     print w
-        #w = w + eta * input[w] * target
-    #    self.prev_weights = self.weights.copy()
-        # update all weight values using gradient descent
-        for i in range(len(self.weights)):
-            #print i
-            self.weights[i] = self.weights[i] + eta * inputs[i] * target
-            #print self.weights[i]
+                # if instance value is found in p_id[0], target is -1
+                # else target is 1
+                if instance.value == p_id[0]:
+                    target = -1
+                else:
+                    target = 1
 
-        # for w in self.weights:
-        #     print self.weights[w]
-            #w = w + eta * input[w] * target
-        ####return self.bias + np.dot(self.weights, inputs) >= 0
+                # choice matches doesn't match target, change weights
+                if choice_num != target:
+                    self.bias[0] = self.bias[0] + eta * 1 * target # bias input is always +1
+                    for i in range(len(self.weights)):
+                        self.weights[i] = self.weights[i] + eta * instance.attributes[i] * target
         return
 
     def save_bias(self):
@@ -100,12 +106,14 @@ class perceptron:
         """
         return self.weights
 
-    def test(self, inputs):
+    def test_instance(self, inputs):
         """
         :param inputs:
         return output y from perceptron
         y = sgn(dot product(w,x))
         """
+        # required to return -1 or 1
+
         # run test on perceptron and return the output from the perceptron
         # return true if bias + the dot product of weights and inputs is geq 0
         # signum function, tells if the sign of the test is correct
@@ -113,22 +121,13 @@ class perceptron:
         # print np.dot(self.weights, inputs)
         # print len(inputs)
         # print inputs
-        try:
-            result = (self.bias[0] + np.dot(self.weights, inputs) >= 0)
-            #np.sign(self.bias[0] + np.dot(self.weights, inputs))
-            if(result == True):
-                return 1
-            else:
-                return -1
+        result = (self.bias[0] + np.dot(self.weights, inputs) >= 0)
+        #np.sign(self.bias[0] + np.dot(self.weights, inputs))
+        if(result == True):
+            return 1
+        else:
+            return -1
 
-        except:
-            # print self.bias[0]
-            # print self.weights
-            # # print np.dot(self.weights, inputs)
-            # print len(inputs)
-            # print len(self.weights)
-            # print inputs
-            raise
 
     def set_incorrect_result(self):
         """
