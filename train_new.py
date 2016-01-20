@@ -9,9 +9,9 @@ from perceptron import perceptron
 from input import letters_list_training
 import random, copy, sys, string
 
-#---------------------
+######################
 # function definitions
-#---------------------
+######################
 
 def training_epoch(perceptron, p_id):
     # run all training instances through perceptron
@@ -48,9 +48,9 @@ def train(perceptron, p_id):
         run_again = training_epoch(perceptron, p_id)
     return
 
-#----------------
+#################
 # data structures
-#----------------
+#################
 # create a dictionary of perceptrons
 # such that all different letter combinations are represented
 perceptrons = {}
@@ -71,15 +71,15 @@ for letter1 in string.ascii_uppercase:
 # # shuffle letters
 # random.shuffle(letters_list_training)
 
-#---------
+#######
 # main
-#---------
+#######
 perceptron_increment = 1
 #
 for m, n in perceptrons: #m, n are the two letters in the perceptron representation (perceptron[kv])
     # print "---------------------------------------",m, n
-    text = "\rTraining perceptron "+str(perceptron_increment)+"/"+str(len(perceptrons))
-    sys.stdout.write(text)
+    # text = "\rTraining perceptron "+str(perceptron_increment)+"/"+str(len(perceptrons))
+    # sys.stdout.write(text)
     perceptron_increment += 1
     # train this perceptron for all training instances
     train(perceptrons[m+n], m+n)

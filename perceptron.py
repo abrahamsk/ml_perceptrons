@@ -30,7 +30,8 @@ class perceptron:
 
     def test_accuracy(self, p_id):
         """
-        Test the accuracy of a perceptron for a given set of inputs
+        Test the accuracy of a perceptron for instances matching the letters
+         in p_id for perceptron[p_id]
         :param id of perceptron:
         :return: the number of accurate results for a given data set
         """
@@ -50,22 +51,29 @@ class perceptron:
                     choice_alpha = p_id[0]
                 else:
                     # mapping p_id[1] to choice 1
+                    # anytime perceptron returns 1, it chose choice p_id[1]
                     choice_alpha = p_id[1]
 
-                # choice matches letter target, test is correct
+                # if choice matches letter target, test is correct
                 if choice_alpha == instance.value[0]:
+                    # increment counter to mark correct result from perceptron
                     num_accurate += 1
+                # increment total whether perceptron was correct or not
+                # to track total instances
                 total += 1
+        # return percent correct
         return num_accurate/total
 
-    def adjust_weights(self, p_id):
 
+    def adjust_weights(self, p_id):
         """
         :param p_id:
         :param target:
-        :return perceptron output y = sgn(dot product(w,x)):
         train perceptron using weight changes
         for use with stochastic gradient descent
+
+        test correctness of perceptron and adjust weights
+        if output from perceptron is incorrect
         """
         #print "---Adjust weights---"
 
@@ -84,7 +92,7 @@ class perceptron:
                 else:
                     target = 1
 
-                # choice matches doesn't match target, change weights
+                # perceptron choice matches doesn't match target, change weights
                 if choice_num != target:
                     self.bias[0] = self.bias[0] + eta * 1 * target # bias input is always +1
                     for i in range(len(self.weights)):
@@ -95,6 +103,7 @@ class perceptron:
     def test_instance(self, inputs):
         """
         :param inputs:
+        tests one instance for one perceptron
         return output y from perceptron
         y = sgn(dot product(w,x))
         """
@@ -103,10 +112,7 @@ class perceptron:
         # run test on perceptron and return the output from the perceptron
         # return true if bias + the dot product of weights and inputs is geq 0
         # signum function, tells if the sign of the test is correct
-        # print self.bias[0]
-        # print np.dot(self.weights, inputs)
-        # print len(inputs)
-        # print inputs
+
         result = (self.bias[0] + np.dot(self.weights, inputs) >= 0)
         #np.sign(self.bias[0] + np.dot(self.weights, inputs))
         if(result == True):
@@ -117,8 +123,9 @@ class perceptron:
 
     def update_weights(self, perceptron):
         """
-        set weights if results
-        of stochastic descent changes are improving
+        update weights if results of stochastic descent changes are improving
+        (commit the changes to weights that are tested in gradient descent
+        once it has been verified that new weights improve accuracy)
         """
         self.bias = perceptron.bias.copy()
         self.weights = perceptron.weights.copy()
