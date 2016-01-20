@@ -67,10 +67,6 @@ for letter1 in string.ascii_uppercase:
 # from the training data
 #for i in range (1, len(perceptrons)):
 
-# matching_letters = []
-# # shuffle letters
-# random.shuffle(letters_list_training)
-
 #######
 # main
 #######

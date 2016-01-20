@@ -6,7 +6,7 @@
 # 1/19/16
 
 import letter, random, sys
-from train_new import perceptrons
+from train import perceptrons
 from input import letters_list_testing
 from pandas_confusion import ConfusionMatrix
 import pandas as pd
