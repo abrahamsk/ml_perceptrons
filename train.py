@@ -65,8 +65,6 @@ for letter1 in string.ascii_uppercase:
 # and train perceptron for matching input
 # e.g. perceptron[AB] gets all A and all B training instances
 # from the training data
-#for i in range (1, len(perceptrons)):
-
 #######
 # main
 #######
